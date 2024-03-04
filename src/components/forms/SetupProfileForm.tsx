@@ -7,19 +7,17 @@ import { doc, updateDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 
 import FormButton from "../common/FormButton";
+import Alert from "../common/Alert";
 import { StyledTextField } from "./SignUpForm";
+import { FormValues } from "@/types/FormValues";
 import { db, auth } from "@/api/firebase-config";
 import "@/styles/components/index.scss";
 
-type FormVals = {
-  name: string;
-  bio: string;
-};
-
 const SetupProfileForm = () => {
   const router = useRouter();
+  const [alertLabel, setAlertLabel] = useState<null | string>(null);
   const [currentUserUid, setCurrentUserUid] = useState("");
-  const initialValues: FormVals = {
+  const initialValues: FormValues = {
     name: "",
     bio: "",
   };
@@ -50,40 +48,44 @@ const SetupProfileForm = () => {
           name: values.name,
           bio: values.bio,
         });
+        setAlertLabel("Redirect...");
+        setTimeout(() => router.push("/"), 2000);
         setSubmitting(false);
-        router.push("/");
       }}
     >
       {({ values, handleSubmit, handleChange }) => {
         return (
-          <Form id="form" onSubmit={handleSubmit}>
-            <h1>Almost there!</h1>
-            <div className="input-container">
-              <StyledTextField
-                type="name"
-                name="name"
-                label="Name"
-                variant="outlined"
-                value={values.name}
-                onChange={handleChange}
-              />
-              <ErrorMessage name="name" component="div" className="error" />
-              <StyledTextField
-                type="text"
-                name="bio"
-                label="Bio"
-                variant="outlined"
-                multiline
-                rows={5}
-                value={values.bio}
-                onChange={handleChange}
-              />
-              <ErrorMessage name="bio" component="div" className="error" />
-            </div>
-            <div className="nav">
-              <FormButton label="Start" />
-            </div>
-          </Form>
+          <>
+            <Form id="form" onSubmit={handleSubmit}>
+              <h1>Almost there!</h1>
+              <div className="input-container">
+                <StyledTextField
+                  type="name"
+                  name="name"
+                  label="Name"
+                  variant="outlined"
+                  value={values.name}
+                  onChange={handleChange}
+                />
+                <ErrorMessage name="name" component="div" className="error" />
+                <StyledTextField
+                  type="text"
+                  name="bio"
+                  label="Bio"
+                  variant="outlined"
+                  multiline
+                  rows={5}
+                  value={values.bio}
+                  onChange={handleChange}
+                />
+                <ErrorMessage name="bio" component="div" className="error" />
+              </div>
+              <div className="nav">
+                <FormButton label="Start" />
+              </div>
+            </Form>
+            <Alert alertLabel={alertLabel} />
+          </>
         );
       }}
     </Formik>

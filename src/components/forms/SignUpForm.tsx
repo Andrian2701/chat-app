@@ -13,6 +13,7 @@ import { styled, Divider, TextField } from "@mui/material";
 
 import GoogleButton from "../common/GoogleButton";
 import FormButton from "../common/FormButton";
+import { FormValues } from "@/types/FormValues";
 import { auth, db } from "@/api/firebase-config";
 import "@/styles/components/index.scss";
 
@@ -30,14 +31,9 @@ export const StyledTextField = styled(TextField)`
   }
 `;
 
-type FormVals = {
-  email: string;
-  password: string;
-};
-
 const SignUpForm = () => {
   const router = useRouter();
-  const initialValues: FormVals = {
+  const initialValues: FormValues = {
     email: "",
     password: "",
   };
@@ -76,7 +72,7 @@ const SignUpForm = () => {
         return (
           <Form id="form" onSubmit={handleSubmit}>
             <h1>Sign up to SyncTalk</h1>
-            <GoogleButton />
+            <GoogleButton label="Sign up" />
             <Divider className="divider">or</Divider>
             <div className="input-container">
               <StyledTextField

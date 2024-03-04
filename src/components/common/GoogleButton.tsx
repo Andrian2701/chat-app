@@ -5,13 +5,17 @@ import { auth, provider } from "@/api/firebase-config";
 import googleIcon from "@/assets/google.png";
 import "@/styles/components/index.scss";
 
-const GoogleButton = () => {
+type GoogleButtonProps = {
+  label: string;
+};
+
+const GoogleButton = ({ label }: GoogleButtonProps) => {
   const handleAuthWithGoogle = () => signInWithRedirect(auth, provider);
 
   return (
     <button type="button" className="google-btn" onClick={handleAuthWithGoogle}>
       <Image width={20} height={20} src={googleIcon} alt="google-icon" />
-      Sign up with Google
+      {label} with Google
     </button>
   );
 };
