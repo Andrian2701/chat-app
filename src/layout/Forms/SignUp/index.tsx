@@ -2,20 +2,19 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import * as Yup from "yup";
-import { Formik, Form, ErrorMessage } from "formik";
+import { doc, setDoc } from "firebase/firestore";
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
 } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
 import { styled, Divider, TextField } from "@mui/material";
+import { Formik, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
-import GoogleButton from "../common/GoogleButton";
-import FormButton from "../common/FormButton";
+import { GoogleButton } from "@/components/index";
 import { FormValues } from "@/types/FormValues";
 import { auth, db } from "@/api/firebase-config";
-import "@/styles/components/index.scss";
+import "@/styles/layout/index.scss";
 
 export const StyledTextField = styled(TextField)`
   & label.Mui-focused {
@@ -31,7 +30,7 @@ export const StyledTextField = styled(TextField)`
   }
 `;
 
-const SignUpForm = () => {
+export const SignUp = () => {
   const router = useRouter();
   const initialValues: FormValues = {
     email: "",
@@ -95,7 +94,9 @@ const SignUpForm = () => {
               <ErrorMessage name="password" component="div" className="error" />
             </div>
             <div className="nav">
-              <FormButton label="Sign up" />
+              <button type="submit" className="form-btn">
+                Sign up
+              </button>
               <div className="to-sign-in">
                 Have an account?
                 <Link href="/sign-in">Sign in</Link>
@@ -107,5 +108,3 @@ const SignUpForm = () => {
     </Formik>
   );
 };
-
-export default SignUpForm;

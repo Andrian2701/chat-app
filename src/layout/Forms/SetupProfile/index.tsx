@@ -1,19 +1,18 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import * as Yup from "yup";
-import { Formik, Form, ErrorMessage } from "formik";
 import { doc, updateDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
+import { Formik, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
-import FormButton from "../common/FormButton";
-import Alert from "../common/Alert";
-import { StyledTextField } from "./SignUpForm";
+import { Alert } from "@/components/index";
+import { StyledTextField } from "../SignUp";
 import { FormValues } from "@/types/FormValues";
 import { db, auth } from "@/api/firebase-config";
-import "@/styles/components/index.scss";
+import "@/styles/layout/index.scss";
 
-const SetupProfileForm = () => {
+export const SetupProfile = () => {
   const router = useRouter();
   const [alertLabel, setAlertLabel] = useState<null | string>(null);
   const [currentUserUid, setCurrentUserUid] = useState("");
@@ -81,7 +80,9 @@ const SetupProfileForm = () => {
                 <ErrorMessage name="bio" component="div" className="error" />
               </div>
               <div className="nav">
-                <FormButton label="Start" />
+                <button type="submit" className="form-btn">
+                  Start
+                </button>
               </div>
             </Form>
             <Alert alertLabel={alertLabel} />
@@ -91,5 +92,3 @@ const SetupProfileForm = () => {
     </Formik>
   );
 };
-
-export default SetupProfileForm;

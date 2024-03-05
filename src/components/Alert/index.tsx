@@ -1,4 +1,5 @@
-import { useState, useEffect, Dispatch, SetStateAction } from "react";
+"use client";
+import { useState, useEffect } from "react";
 import { Snackbar, SnackbarOrigin } from "@mui/material";
 
 interface State extends SnackbarOrigin {
@@ -9,7 +10,7 @@ type AlertProps = {
   alertLabel: null | string;
 };
 
-const Alert = ({ alertLabel }: AlertProps) => {
+export const Alert = ({ alertLabel }: AlertProps) => {
   const [state, setState] = useState<State>({
     open: false,
     vertical: "bottom",
@@ -38,5 +39,3 @@ const Alert = ({ alertLabel }: AlertProps) => {
     />
   );
 };
-
-export default Alert;

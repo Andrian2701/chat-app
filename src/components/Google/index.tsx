@@ -9,7 +9,7 @@ type GoogleButtonProps = {
   label: string;
 };
 
-const GoogleButton = ({ label }: GoogleButtonProps) => {
+export const GoogleButton = ({ label }: GoogleButtonProps) => {
   const handleAuthWithGoogle = () => signInWithRedirect(auth, provider);
 
   return (
@@ -19,5 +19,3 @@ const GoogleButton = ({ label }: GoogleButtonProps) => {
     </button>
   );
 };
-
-export default GoogleButton;

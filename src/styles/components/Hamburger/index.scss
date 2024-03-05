@@ -1,0 +1,36 @@
+.hamburger-icon {
+  color: #c7c6c5;
+  font-size: 1.4rem;
+  transition-duration: 0.2s;
+  cursor: pointer;
+
+  &:hover {
+    color: rgb(29, 155, 240);
+  }
+}
+
+.MuiPaper-root {
+  width: 19.5rem;
+
+  .top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 1.5rem 1.5rem 1.5rem;
+
+    .log-out {
+      font-size: 1.6rem;
+      color: #c7c6c5;
+      cursor: pointer;
+      transition-duration: 0.2s;
+
+      &:hover {
+        color: rgb(29, 155, 240);
+      }
+    }
+  }
+
+  .bottom {
+    padding-top: 0.5rem;
+  }
+}

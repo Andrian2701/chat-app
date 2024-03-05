@@ -1,9 +1,9 @@
-import SetupProfileForm from "@/components/forms/SetupProfileForm";
+import { SetupProfile } from "@/layout/index";
 
 const SetupProfilePage = () => {
   return (
     <>
-      <SetupProfileForm />
+      <SetupProfile />
     </>
   );
 };

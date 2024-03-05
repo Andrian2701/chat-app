@@ -2,20 +2,19 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import * as Yup from "yup";
-import { Formik, Form, ErrorMessage } from "formik";
 import { sendSignInLinkToEmail, onAuthStateChanged } from "firebase/auth";
 import { Divider } from "@mui/material";
+import { Formik, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
-import GoogleButton from "../common/GoogleButton";
-import FormButton from "../common/FormButton";
-import Alert from "../common/Alert";
-import { StyledTextField } from "./SignUpForm";
+import { GoogleButton } from "@/components/index";
+import { Alert } from "@/components/index";
+import { StyledTextField } from "../SignUp";
 import { FormValues } from "@/types/FormValues";
 import { auth, actionCodeSettings } from "@/api/firebase-config";
-import "@/styles/components/index.scss";
+import "@/styles/layout/index.scss";
 
-const SignInForm = () => {
+export const SignIn = () => {
   const [alertLabel, setAlertLabel] = useState<string | null>(null);
   const initialValues: FormValues = {
     email: "",
@@ -72,7 +71,9 @@ const SignInForm = () => {
                 <ErrorMessage name="email" component="div" className="error" />
               </div>
               <div className="nav">
-                <FormButton label="Send link" />
+                <button type="submit" className="form-btn">
+                  Send link
+                </button>
                 <div className="to-sign-in">
                   Don't have an account?
                   <Link href="/sign-up">Sign up</Link>
@@ -86,5 +87,3 @@ const SignInForm = () => {
     </Formik>
   );
 };
-
-export default SignInForm;

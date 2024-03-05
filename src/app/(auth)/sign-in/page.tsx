@@ -1,9 +1,9 @@
-import SignInForm from "@/components/forms/SignInForm";
+import { SignIn } from "@/layout/index";
 
 const SignInPage = () => {
   return (
     <>
-      <SignInForm />
+      <SignIn />
     </>
   );
 };
