@@ -11,7 +11,7 @@ import { styled, Divider, TextField } from "@mui/material";
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import { GoogleButton } from "@/components/index";
+import { AppButton, GoogleButton } from "@/components/index";
 import { FormValues } from "@/types/FormValues";
 import { auth, db } from "@/api/firebase-config";
 import "@/styles/layout/index.scss";
@@ -94,9 +94,7 @@ export const SignUp = () => {
               <ErrorMessage name="password" component="div" className="error" />
             </div>
             <div className="nav">
-              <button type="submit" className="form-btn">
-                Sign up
-              </button>
+              <AppButton className="app-btn-black" label="Sign up" />
               <div className="to-sign-in">
                 Have an account?
                 <Link href="/sign-in">Sign in</Link>

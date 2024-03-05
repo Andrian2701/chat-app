@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 
+import { LogOutModal, UserProfileModal } from "../components/index";
 import "../styles/main.scss";
 
 const roboto = Roboto({
@@ -21,7 +22,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={roboto.variable}>{children}</body>
+      <body className={roboto.variable}>
+        {children}
+        <LogOutModal />
+        <UserProfileModal />
+      </body>
     </html>
   );
 }

@@ -6,7 +6,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import { Alert } from "@/components/index";
+import { Alert, AppButton } from "@/components/index";
 import { StyledTextField } from "../SignUp";
 import { FormValues } from "@/types/FormValues";
 import { db, auth } from "@/api/firebase-config";
@@ -80,9 +80,7 @@ export const SetupProfile = () => {
                 <ErrorMessage name="bio" component="div" className="error" />
               </div>
               <div className="nav">
-                <button type="submit" className="form-btn">
-                  Start
-                </button>
+                <AppButton className="app-btn-black" label="Start" />
               </div>
             </Form>
             <Alert alertLabel={alertLabel} />

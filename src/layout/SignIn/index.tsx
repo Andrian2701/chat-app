@@ -7,7 +7,7 @@ import { Divider } from "@mui/material";
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import { GoogleButton } from "@/components/index";
+import { AppButton, GoogleButton } from "@/components/index";
 import { Alert } from "@/components/index";
 import { StyledTextField } from "../SignUp";
 import { FormValues } from "@/types/FormValues";
@@ -71,9 +71,7 @@ export const SignIn = () => {
                 <ErrorMessage name="email" component="div" className="error" />
               </div>
               <div className="nav">
-                <button type="submit" className="form-btn">
-                  Send link
-                </button>
+                <AppButton className="app-btn-black" label="Send link" />
                 <div className="to-sign-in">
                   Don't have an account?
                   <Link href="/sign-up">Sign up</Link>
