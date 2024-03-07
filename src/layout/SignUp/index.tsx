@@ -13,7 +13,7 @@ import * as Yup from "yup";
 
 import { AppButton, GoogleButton } from "@/components/index";
 import { FormValues } from "@/types/FormValues";
-import { auth, db } from "@/api/firebase-config";
+import { auth, db } from "@/utils/firebase";
 import "@/styles/layout/index.scss";
 
 export const StyledTextField = styled(TextField)`
@@ -25,7 +25,7 @@ export const StyledTextField = styled(TextField)`
       border-color: rgb(29, 155, 240);
     }
     fieldset {
-      border-color: #9e9e9e;
+      border-color: #b5b5b5;
     }
   }
 `;
@@ -53,7 +53,7 @@ export const SignUp = () => {
           name: user.displayName,
           email: user.email,
         });
-        router.push("/sign-up/setup-profile");
+        router.push("/setup-profile");
       }
     });
   }, []);
@@ -69,7 +69,7 @@ export const SignUp = () => {
     >
       {({ values, handleSubmit, handleChange }) => {
         return (
-          <Form id="form" onSubmit={handleSubmit}>
+          <Form onSubmit={handleSubmit}>
             <h1>Sign up to SyncTalk</h1>
             <GoogleButton label="Sign up" />
             <Divider className="divider">or</Divider>

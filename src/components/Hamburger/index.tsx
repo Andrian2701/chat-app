@@ -24,8 +24,12 @@ export const Hamburger = () => {
       />
       <Drawer open={open} onClose={toggleDrawer(false)}>
         <div className="top">
-          <ProfileMenu />
-          <Link href="?logOutModal=true" className="log-out">
+          <ProfileMenu className="profile-menu" onClick={toggleDrawer(false)} />
+          <Link
+            href="?logOutModal=true"
+            className="log-out"
+            onClick={toggleDrawer(false)}
+          >
             <IoLogOutOutline />
           </Link>
         </div>

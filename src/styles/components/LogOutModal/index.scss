@@ -1,68 +1,14 @@
 @use "../../abstracts/index.scss" as *;
 
 .log-out-modal {
-  width: 22.5rem;
-  padding: 2rem 2.5rem 2rem 2.5rem;
-  position: absolute;
-  transform: translate(-50%, -50%);
-  top: 50%;
-  left: 50%;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  background-color: #ffffff;
-  border-radius: 0.8rem;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  @include form;
   z-index: 10000;
 
   @media (max-width: 500px) {
-    width: 100%;
-    height: 100%;
-    border-radius: 0;
-  }
-
-  h1 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #050505;
+    @include mobile-form;
   }
 
   p {
-    color: #c7c6c5;
-  }
-
-  .btns {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-
-    .submit-btn {
-      width: 100%;
-      padding: 0.7rem 1rem 0.7em 1rem;
-      border-radius: 999rem;
-      border: 1px solid #050505;
-      color: #ffffff;
-      background-color: #050505;
-      text-decoration: none;
-      text-align: center;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-
-      &:hover {
-        background-color: #242424;
-      }
-    }
-
-    .cancel-btn {
-      @extend .submit-btn;
-      color: #050505;
-      border: 1px solid #c7c6c5;
-      background-color: #ffffff;
-
-      &:hover {
-        background-color: #ededed;
-      }
-    }
+    color: $color-grey;
   }
 }

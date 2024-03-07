@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 
-import { db } from "../api/firebase-config";
+import { db } from "../utils/firebase";
 
 export const useFetchUsers = () => {
   const [users, setUsers] = useState([]);

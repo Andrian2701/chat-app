@@ -1,0 +1,25 @@
+@use "../../abstracts/index.scss" as *;
+
+.profile-modal {
+  @include form;
+  z-index: 10000;
+
+  @media (max-width: 500px) {
+    @include mobile-form;
+  }
+
+  input {
+    padding: 0.8rem 1rem 0.8rem 1rem;
+    border: none;
+  }
+
+  .inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    input {
+      padding: 16.5px 14px;
+    }
+  }
+}

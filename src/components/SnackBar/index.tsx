@@ -10,7 +10,7 @@ type AlertProps = {
   alertLabel: null | string;
 };
 
-export const Alert = ({ alertLabel }: AlertProps) => {
+export const SnackBar = ({ alertLabel }: AlertProps) => {
   const [state, setState] = useState<State>({
     open: false,
     vertical: "bottom",

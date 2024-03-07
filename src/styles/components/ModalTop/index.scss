@@ -1,0 +1,26 @@
+@use "../../abstracts/variables" as *;
+
+.modal-top {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+
+  a {
+    font-size: 1.5rem;
+    color: $color-grey;
+    display: flex;
+    align-items: center;
+    transition-duration: 0.2s;
+
+    &:hover {
+      color: $color-blue;
+    }
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $color-black;
+  }
+}

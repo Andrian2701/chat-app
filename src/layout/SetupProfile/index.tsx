@@ -2,14 +2,14 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { doc, updateDoc } from "firebase/firestore";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, updateProfile } from "firebase/auth";
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import { Alert, AppButton } from "@/components/index";
+import { SnackBar, AppButton } from "@/components/index";
 import { StyledTextField } from "../SignUp";
 import { FormValues } from "@/types/FormValues";
-import { db, auth } from "@/api/firebase-config";
+import { db, auth } from "@/utils/firebase";
 import "@/styles/layout/index.scss";
 
 export const SetupProfile = () => {
@@ -47,6 +47,9 @@ export const SetupProfile = () => {
           name: values.name,
           bio: values.bio,
         });
+        updateProfile(auth.currentUser, {
+          displayName: values.name,
+        });
         setAlertLabel("Redirect...");
         setTimeout(() => router.push("/"), 2000);
         setSubmitting(false);
@@ -55,7 +58,7 @@ export const SetupProfile = () => {
       {({ values, handleSubmit, handleChange }) => {
         return (
           <>
-            <Form id="form" onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit}>
               <h1>Almost there!</h1>
               <div className="input-container">
                 <StyledTextField
@@ -83,7 +86,7 @@ export const SetupProfile = () => {
                 <AppButton className="app-btn-black" label="Start" />
               </div>
             </Form>
-            <Alert alertLabel={alertLabel} />
+            <SnackBar alertLabel={alertLabel} />
           </>
         );
       }}

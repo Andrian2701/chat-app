@@ -8,10 +8,10 @@ import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 import { AppButton, GoogleButton } from "@/components/index";
-import { Alert } from "@/components/index";
+import { SnackBar } from "@/components/index";
 import { StyledTextField } from "../SignUp";
 import { FormValues } from "@/types/FormValues";
-import { auth, actionCodeSettings } from "@/api/firebase-config";
+import { auth, actionCodeSettings } from "@/utils/firebase";
 import "@/styles/layout/index.scss";
 
 export const SignIn = () => {
@@ -43,19 +43,19 @@ export const SignIn = () => {
           .then(() => {
             window.localStorage.setItem("emailForSignIn", values.email);
             setAlertLabel("A sign-in link has been sent to your email");
+            setSubmitting(false);
           })
           .catch(() =>
             setAlertLabel(
               "Something went wrong while sending the sign-in link. Please try again later"
             )
           );
-        setSubmitting(false);
       }}
     >
       {({ values, handleSubmit, handleChange }) => {
         return (
           <>
-            <Form id="form" onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit}>
               <h1>Sign in to SyncTalk</h1>
               <GoogleButton label="Sign in" />
               <Divider className="divider">or</Divider>
@@ -78,7 +78,7 @@ export const SignIn = () => {
                 </div>
               </div>
             </Form>
-            <Alert alertLabel={alertLabel} />
+            <SnackBar alertLabel={alertLabel} />
           </>
         );
       }}

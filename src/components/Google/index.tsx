@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { signInWithRedirect } from "firebase/auth";
 
-import { auth, provider } from "@/api/firebase-config";
+import { auth, provider } from "@/utils/firebase";
 import googleIcon from "@/assets/google.png";
 import "@/styles/components/index.scss";
 

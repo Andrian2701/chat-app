@@ -1,11 +1,13 @@
+@use "../../abstracts/variables" as *;
+
 .hamburger-icon {
-  color: #c7c6c5;
+  color: $color-grey;
   font-size: 1.4rem;
   transition-duration: 0.2s;
   cursor: pointer;
 
   &:hover {
-    color: rgb(29, 155, 240);
+    color: $color-blue;
   }
 }
 
@@ -20,12 +22,12 @@
 
     .log-out {
       font-size: 1.6rem;
-      color: #c7c6c5;
+      color: $color-grey;
       cursor: pointer;
       transition-duration: 0.2s;
 
       &:hover {
-        color: rgb(29, 155, 240);
+        color: $color-blue;
       }
     }
   }

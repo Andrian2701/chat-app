@@ -1,20 +1,22 @@
+@use "../../abstracts/variables" as *;
+
 .search-chats-input {
   width: 23rem;
   padding: 0.5rem 0.5rem 0.5rem 1rem;
   border-radius: 999rem;
-  border: 1px solid #ededed;
-  background-color: #ededed;
-  color: #050505;
+  border: 1px solid $color-grey-hover;
+  background-color: $color-grey-hover;
+  color: $color-black;
   font-size: 0.9rem;
 
   &:focus {
-    border: 1px solid #c7c6c5;
-    background-color: #ffffff;
+    border: 1px solid $color-grey;
+    background-color: $color-white;
     outline: none;
   }
 
   &::placeholder {
     font-size: 0.9rem;
-    color: #c7c6c5;
+    color: $color-grey;
   }
 }

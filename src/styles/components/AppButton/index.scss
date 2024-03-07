@@ -1,10 +1,12 @@
+@use "../../abstracts/variables" as *;
+
 .app-btn-black {
   width: 100%;
   padding: 0.7rem 1rem 0.7em 1rem;
   border-radius: 999rem;
-  border: 1px solid #050505;
-  color: #ffffff;
-  background-color: #050505;
+  border: 1px solid $color-black;
+  color: $color-white;
+  background-color: $color-black;
   text-decoration: none;
   text-align: center;
   font-size: 0.9rem;
@@ -12,17 +14,6 @@
   cursor: pointer;
 
   &:hover {
-    background-color: #242424;
-  }
-}
-
-.app-btn-white {
-  @extend .app-btn-black;
-  color: #050505;
-  background-color: #ffffff;
-  border: 1px solid #c7c6c5;
-
-  &:hover {
-    background-color: #ededed;
+    background-color: $color-black-hover;
   }
 }

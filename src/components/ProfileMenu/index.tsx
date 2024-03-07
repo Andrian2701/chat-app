@@ -1,16 +1,29 @@
 "use client";
-import { useState, useEffect } from "react";
-import { useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
+import Link from "next/link";
 import { onAuthStateChanged } from "firebase/auth";
+import { getDownloadURL, ref } from "firebase/storage";
 import { Avatar, Skeleton } from "@mui/material";
 
 import { useFetchUsers } from "@/hooks/useFetchUsers";
-import { auth } from "@/api/firebase-config";
+import { auth, storage } from "@/utils/firebase";
 import "@/styles/components/index.scss";
 
-export const ProfileMenu = () => {
+type ProfileMenuProps = {
+  className: string;
+  children?: any;
+  onClick?: any;
+};
+
+export const ProfileMenu = ({
+  className,
+  children,
+  onClick,
+}: ProfileMenuProps) => {
   const { users, loading } = useFetchUsers();
   const [currentUserUid, setCurrentUserUid] = useState("");
+  const [avatarLoad, setAvatarLoad] = useState(true);
+  const [avatar, setAvatar] = useState("");
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -25,9 +38,18 @@ export const ProfileMenu = () => {
     [currentUserUid, users]
   );
 
+  const avatarPath = ref(storage, `users-avatars/${currentUserUid}`);
+
+  useEffect(() => {
+    getDownloadURL(avatarPath).then((url) => {
+      setAvatar(url);
+      setAvatarLoad(false);
+    });
+  }, [avatarPath]);
+
   return (
-    <div className="profile-menu">
-      {loading ? (
+    <div className={className}>
+      {loading && avatarLoad ? (
         <>
           <Skeleton
             variant="circular"
@@ -44,9 +66,12 @@ export const ProfileMenu = () => {
         <>
           {currentUser.map((user) => (
             <>
-              <Avatar alt="profile" className="avatar">
-                {user.name.charAt(0)}
-              </Avatar>
+              <Link href="?profileModal=true" onClick={onClick}>
+                <Avatar className="avatar" src={avatar} alt="profile">
+                  {user.name.charAt(0)}
+                </Avatar>
+              </Link>
+              {children}
               <p>{user.name}</p>
             </>
           ))}
