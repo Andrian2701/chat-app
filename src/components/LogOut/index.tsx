@@ -8,11 +8,11 @@ import { AppButton } from "..";
 import { auth } from "@/utils/firebase";
 import "@/styles/components/index.scss";
 
-export const LogOutModal = () => {
+export const LogOut = () => {
   const searchParams = useSearchParams();
-  const logOutModal = searchParams.get("logOutModal");
   const pathname = usePathname();
   const router = useRouter();
+  const logOutModal = searchParams.get("logOutModal");
 
   const handleLogOut = () => {
     signOut(auth).then(() => {
@@ -31,11 +31,7 @@ export const LogOutModal = () => {
               Logging out now will end your current session. You can always log
               back in at any time to continue where you left off.
             </p>
-            <AppButton
-              className="app-btn-black"
-              label="Log out"
-              onClick={handleLogOut}
-            />
+            <AppButton label="Log out" onClick={handleLogOut} />
           </div>
         </>
       )}

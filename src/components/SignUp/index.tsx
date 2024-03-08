@@ -11,10 +11,9 @@ import { styled, Divider, TextField } from "@mui/material";
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import { AppButton, GoogleButton } from "@/components/index";
-import { FormValues } from "@/types/FormValues";
+import { AppButton, GoogleAuth } from "@/components/index";
 import { auth, db } from "@/utils/firebase";
-import "@/styles/layout/index.scss";
+import "@/styles/components/index.scss";
 
 export const StyledTextField = styled(TextField)`
   & label.Mui-focused {
@@ -29,6 +28,11 @@ export const StyledTextField = styled(TextField)`
     }
   }
 `;
+
+type FormValues = {
+  email: string;
+  password: string;
+};
 
 export const SignUp = () => {
   const router = useRouter();
@@ -71,7 +75,7 @@ export const SignUp = () => {
         return (
           <Form onSubmit={handleSubmit}>
             <h1>Sign up to SyncTalk</h1>
-            <GoogleButton label="Sign up" />
+            <GoogleAuth label="Sign up" />
             <Divider className="divider">or</Divider>
             <div className="input-container">
               <StyledTextField
@@ -94,7 +98,7 @@ export const SignUp = () => {
               <ErrorMessage name="password" component="div" className="error" />
             </div>
             <div className="nav">
-              <AppButton className="app-btn-black" label="Sign up" />
+              <AppButton label="Sign up" />
               <div className="to-sign-in">
                 Have an account?
                 <Link href="/sign-in">Sign in</Link>

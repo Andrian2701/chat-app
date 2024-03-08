@@ -2,27 +2,37 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { sendSignInLinkToEmail, onAuthStateChanged } from "firebase/auth";
+import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { Divider } from "@mui/material";
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import { AppButton, GoogleButton } from "@/components/index";
+import { AppButton, GoogleAuth } from "@/components/index";
 import { SnackBar } from "@/components/index";
 import { StyledTextField } from "../SignUp";
-import { FormValues } from "@/types/FormValues";
-import { auth, actionCodeSettings } from "@/utils/firebase";
-import "@/styles/layout/index.scss";
+import { auth } from "@/utils/firebase";
+import "@/styles/components/index.scss";
+
+type FormValues = {
+  email: string;
+  password: string;
+};
 
 export const SignIn = () => {
   const [alertLabel, setAlertLabel] = useState<string | null>(null);
+  const router = useRouter();
+
   const initialValues: FormValues = {
     email: "",
+    password: "",
   };
-  const router = useRouter();
 
   const validationSchema = Yup.object({
     email: Yup.string().email("Invalid email").required("Email is required"),
+    password: Yup.string()
+      .required("Password is required")
+      .min(8, "Required min 8")
+      .max(16, "Required max 16"),
   });
 
   useEffect(() => {
@@ -39,17 +49,12 @@ export const SignIn = () => {
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={(values, { setSubmitting }) => {
-        sendSignInLinkToEmail(auth, values.email, actionCodeSettings)
-          .then(() => {
-            window.localStorage.setItem("emailForSignIn", values.email);
-            setAlertLabel("A sign-in link has been sent to your email");
-            setSubmitting(false);
-          })
-          .catch(() =>
-            setAlertLabel(
-              "Something went wrong while sending the sign-in link. Please try again later"
-            )
-          );
+        signInWithEmailAndPassword(auth, values.email, values.password).catch(
+          () => {
+            setAlertLabel("Email or password isn't correct. Please try.");
+          }
+        );
+        setSubmitting(false);
       }}
     >
       {({ values, handleSubmit, handleChange }) => {
@@ -57,7 +62,7 @@ export const SignIn = () => {
           <>
             <Form onSubmit={handleSubmit}>
               <h1>Sign in to SyncTalk</h1>
-              <GoogleButton label="Sign in" />
+              <GoogleAuth label="Sign in" />
               <Divider className="divider">or</Divider>
               <div className="input-container">
                 <StyledTextField
@@ -69,9 +74,22 @@ export const SignIn = () => {
                   onChange={handleChange}
                 />
                 <ErrorMessage name="email" component="div" className="error" />
+                <StyledTextField
+                  type="password"
+                  name="password"
+                  label="Password"
+                  variant="outlined"
+                  value={values.password}
+                  onChange={handleChange}
+                />
+                <ErrorMessage
+                  name="password"
+                  component="div"
+                  className="error"
+                />
               </div>
               <div className="nav">
-                <AppButton className="app-btn-black" label="Send link" />
+                <AppButton label="Sign in" />
                 <div className="to-sign-in">
                   Don't have an account?
                   <Link href="/sign-up">Sign up</Link>

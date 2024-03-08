@@ -19,15 +19,18 @@ const metadata = {
 };
 
 export const SetAvatar = ({ currentUserUid }: SetAvatarProps) => {
-  const [avatarUpload, setAvatarUpload] = useState(null);
+  const [avatarUpload, setAvatarUpload] = useState<File | null>(null);
   const avatarRef = storageRef(storage, `users-avatars/${currentUserUid}`);
 
   const handleUploadAvatar = async () => {
     if (!avatarUpload) return;
 
     const reader = new FileReader();
-    reader.onload = async (event) => {
-      const blob = new Blob([event.target.result], { type: avatarUpload.type });
+    reader.onload = async (e) => {
+      if (!e.target) return;
+      const target = e.target as FileReader;
+      if (!target.result) return;
+      const blob = new Blob([target.result], { type: avatarUpload.type });
       const snapshot = await uploadBytes(avatarRef, blob, metadata);
       const url = await getDownloadURL(snapshot.ref);
     };
@@ -45,6 +48,7 @@ export const SetAvatar = ({ currentUserUid }: SetAvatarProps) => {
       <input
         type="file"
         onChange={(e) => {
+          if (!e.target || !e.target.files) return;
           setAvatarUpload(e.target.files[0]);
         }}
       />

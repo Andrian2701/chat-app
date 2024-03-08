@@ -1,4 +1,4 @@
-import { SetupProfile } from "@/layout/index";
+import { SetupProfile } from "@/components/index";
 
 const SetupProfilePage = () => {
   return (

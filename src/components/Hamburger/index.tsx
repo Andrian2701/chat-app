@@ -5,12 +5,12 @@ import { Divider, Drawer } from "@mui/material";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoLogOutOutline } from "react-icons/io5";
 
-import { ProfileMenu } from "../ProfileMenu";
+import { ProfileBar } from "../ProfileBar";
 import { NavBar } from "../NavBar";
 import "@/styles/components/index.scss";
 
 export const Hamburger = () => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
@@ -24,7 +24,7 @@ export const Hamburger = () => {
       />
       <Drawer open={open} onClose={toggleDrawer(false)}>
         <div className="top">
-          <ProfileMenu className="profile-menu" onClick={toggleDrawer(false)} />
+          <ProfileBar className="profile-menu" onClick={toggleDrawer(false)} />
           <Link
             href="?logOutModal=true"
             className="log-out"

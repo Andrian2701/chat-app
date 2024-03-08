@@ -9,13 +9,17 @@ type GoogleButtonProps = {
   label: string;
 };
 
-export const GoogleButton = ({ label }: GoogleButtonProps) => {
+export const GoogleAuth = ({ label }: GoogleButtonProps) => {
   const handleAuthWithGoogle = () => signInWithRedirect(auth, provider);
 
   return (
-    <button type="button" className="google-btn" onClick={handleAuthWithGoogle}>
-      <Image width={20} height={20} src={googleIcon} alt="google-icon" />
-      {label} with Google
+    <button
+      type="button"
+      className="google-auth-btn"
+      onClick={handleAuthWithGoogle}
+    >
+      <Image src={googleIcon} alt="google-icon" width={20} height={20} />
+      <p>{label} with Google</p>
     </button>
   );
 };

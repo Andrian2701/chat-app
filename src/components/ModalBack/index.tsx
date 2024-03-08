@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Backdrop } from "@mui/material";
 
 export const ModalBack = () => {
-  const [open] = useState(true);
+  const [open] = useState<boolean>(true);
 
   return (
     <Backdrop

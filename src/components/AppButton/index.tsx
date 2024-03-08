@@ -1,14 +1,13 @@
 import "@/styles/components/index.scss";
 
 type AppButtonProps = {
-  className: string;
   label: string;
   onClick?: () => void;
 };
 
-export const AppButton = ({ className, label, onClick }: AppButtonProps) => {
+export const AppButton = ({ label, onClick }: AppButtonProps) => {
   return (
-    <button className={className} onClick={onClick}>
+    <button className="app-btn" onClick={onClick}>
       {label}
     </button>
   );

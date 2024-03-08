@@ -1,14 +1,7 @@
-@use "../../abstracts/variables" as *;
+@use "../../abstracts/index.scss" as *;
 
 .hamburger-icon {
-  color: $color-grey;
-  font-size: 1.4rem;
-  transition-duration: 0.2s;
-  cursor: pointer;
-
-  &:hover {
-    color: $color-blue;
-  }
+  @include grey-icon;
 }
 
 .MuiPaper-root {
@@ -21,14 +14,8 @@
     padding: 1.5rem 1.5rem 1.5rem 1.5rem;
 
     .log-out {
+      @include grey-icon;
       font-size: 1.6rem;
-      color: $color-grey;
-      cursor: pointer;
-      transition-duration: 0.2s;
-
-      &:hover {
-        color: $color-blue;
-      }
     }
   }
 

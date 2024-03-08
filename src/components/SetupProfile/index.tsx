@@ -1,21 +1,27 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { doc, updateDoc } from "firebase/firestore";
-import { onAuthStateChanged, updateProfile } from "firebase/auth";
+import { updateProfile } from "firebase/auth";
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 import { SnackBar, AppButton } from "@/components/index";
 import { StyledTextField } from "../SignUp";
-import { FormValues } from "@/types/FormValues";
-import { db, auth } from "@/utils/firebase";
-import "@/styles/layout/index.scss";
+import { useGetCurrentUser } from "@/hooks/useGetCurrentUser";
+import { auth, db } from "@/utils/firebase";
+import "@/styles/components/index.scss";
+
+type FormValues = {
+  name: string;
+  bio: string;
+};
 
 export const SetupProfile = () => {
   const router = useRouter();
   const [alertLabel, setAlertLabel] = useState<null | string>(null);
-  const [currentUserUid, setCurrentUserUid] = useState("");
+  const { currentUser } = useGetCurrentUser();
+
   const initialValues: FormValues = {
     name: "",
     bio: "",
@@ -29,20 +35,12 @@ export const SetupProfile = () => {
     bio: Yup.string().min(4, "Required min 4").max(100, "Required max 100"),
   });
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setCurrentUserUid(user.uid);
-      }
-    });
-  }, []);
-
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={(values, { setSubmitting }) => {
-        const currentUserRef = doc(db, "users", currentUserUid);
+        const currentUserRef = doc(db, "users", currentUser?.uid);
         updateDoc(currentUserRef, {
           name: values.name,
           bio: values.bio,
@@ -83,7 +81,7 @@ export const SetupProfile = () => {
                 <ErrorMessage name="bio" component="div" className="error" />
               </div>
               <div className="nav">
-                <AppButton className="app-btn-black" label="Start" />
+                <AppButton label="Start" />
               </div>
             </Form>
             <SnackBar alertLabel={alertLabel} />

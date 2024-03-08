@@ -1,5 +1,3 @@
-"use client";
-
 import { SideBar } from "@/layout";
 
 const Home = () => {

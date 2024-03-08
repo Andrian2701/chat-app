@@ -13,15 +13,10 @@ const firebaseConfig = {
   measurementId: "G-PP745RNW7S",
 };
 
-const actionCodeSettings = {
-  url: "http://localhost:3000",
-  handleCodeInApp: true,
-};
-
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getFirestore();
 const storage = getStorage();
 const provider = new GoogleAuthProvider();
 
-export { app, auth, provider, db, storage, actionCodeSettings };
+export { app, auth, provider, db, storage };
