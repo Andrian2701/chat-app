@@ -1,8 +1,8 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { Divider } from "@mui/material";
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -35,32 +35,26 @@ export const SignIn = () => {
       .max(16, "Required max 16"),
   });
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setAlertLabel("Redirect...");
-        setTimeout(() => router.push("/"), 2000);
-      }
-    });
-  }, []);
-
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={(values, { setSubmitting }) => {
-        signInWithEmailAndPassword(auth, values.email, values.password).catch(
-          () => {
+        signInWithEmailAndPassword(auth, values.email, values.password)
+          .then(() => {
+            setAlertLabel("Redirect...");
+            setTimeout(() => router.push("/"), 2000);
+          })
+          .catch(() => {
             setAlertLabel("Email or password isn't correct. Please try.");
-          }
-        );
+          });
         setSubmitting(false);
       }}
     >
       {({ values, handleSubmit, handleChange }) => {
         return (
           <>
-            <Form onSubmit={handleSubmit}>
+            <Form className="sign-in" onSubmit={handleSubmit}>
               <h1>Sign in to SyncTalk</h1>
               <GoogleAuth label="Sign in" />
               <Divider className="divider">or</Divider>

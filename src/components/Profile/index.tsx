@@ -1,44 +1,43 @@
 "use client";
-import { useState, useEffect } from "react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useSearchParams, usePathname } from "next/navigation";
 import { doc, updateDoc } from "firebase/firestore";
 import { updateProfile } from "firebase/auth";
+import { Formik, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
 import { ModalTop } from "../ModalTop";
 import { AppButton, SetAvatar, ModalBack } from "..";
 import { ProfileBar } from "../ProfileBar";
 import { StyledTextField } from "@/components";
 import { useGetCurrentUser } from "@/hooks/useGetCurrentUser";
-import { db } from "@/utils/firebase";
+import { auth, db } from "@/utils/firebase";
 import "@/styles/components/index.scss";
+
+type FormValues = {
+  name: string;
+  bio: string;
+};
 
 export const Profile = () => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const profileModal = searchParams.get("profileModal");
-  const [bio, setBio] = useState("");
-  const [name, setName] = useState("");
+  const router = useRouter();
   const { currentUser } = useGetCurrentUser();
 
-  useEffect(() => {
-    setName(currentUser?.name || "");
-    currentUser && typeof currentUser.bio === "string"
-      ? setBio(currentUser.bio)
-      : setBio("");
-  }, [currentUser]);
-
-  const handleUpdateUserData = async () => {
-    const userRef = doc(db, "users", currentUser?.uid);
-
-    await updateDoc(userRef, {
-      name: name,
-      bio: bio,
-    });
-    updateProfile(currentUser?.uid, {
-      displayName: name,
-    });
+  const initialValues: FormValues = {
+    name: currentUser?.name || "",
+    bio: currentUser?.bio || "",
   };
+
+  const validationSchema = Yup.object({
+    name: Yup.string()
+      .min(2, "Required min 2")
+      .max(16, "Required max 16")
+      .required("Name is required"),
+    bio: Yup.string().min(4, "Required min 4").max(100, "Required max 100"),
+  });
 
   return (
     <>
@@ -50,25 +49,54 @@ export const Profile = () => {
             <ProfileBar className="profile-menu-modal">
               <SetAvatar currentUserUid={currentUser?.uid} />
             </ProfileBar>
-            <div className="inputs">
-              <StyledTextField
-                variant="outlined"
-                label="Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              <StyledTextField
-                variant="outlined"
-                label="Bio"
-                value={bio}
-                onChange={(e) => setBio(e.target.value)}
-                rows={5}
-                multiline
-              />
-            </div>
-            <Link href={pathname}>
-              <AppButton label="Save" onClick={handleUpdateUserData} />
-            </Link>
+            <Formik
+              initialValues={initialValues}
+              validationSchema={validationSchema}
+              enableReinitialize={true}
+              onSubmit={(values, { setSubmitting }) => {
+                const userRef = doc(db, "users", currentUser?.uid);
+
+                updateDoc(userRef, {
+                  name: values.name,
+                  bio: values.bio,
+                });
+                updateProfile(auth.currentUser, {
+                  displayName: values.name,
+                });
+                setSubmitting(false);
+                router.push(pathname);
+              }}
+            >
+              {({ values, handleSubmit, handleChange }) => (
+                <Form className="edit-profile-form" onSubmit={handleSubmit}>
+                  <StyledTextField
+                    variant="outlined"
+                    name="name"
+                    label="Name"
+                    value={values.name}
+                    onChange={handleChange}
+                    onKeyDown={(e) => {
+                      e.key === "Enter" && e.preventDefault();
+                    }}
+                  />
+                  <ErrorMessage name="name" className="error" component="div" />
+                  <StyledTextField
+                    variant="outlined"
+                    name="bio"
+                    label="Bio"
+                    value={values.bio}
+                    onChange={handleChange}
+                    onKeyDown={(e) => {
+                      e.key === "Enter" && e.preventDefault();
+                    }}
+                    rows={5}
+                    multiline
+                  />
+                  <ErrorMessage name="bio" className="error" component="div" />
+                  <AppButton label="Save" />
+                </Form>
+              )}
+            </Formik>
           </div>
         </>
       )}

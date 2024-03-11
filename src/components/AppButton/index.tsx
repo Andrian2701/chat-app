@@ -7,7 +7,7 @@ type AppButtonProps = {
 
 export const AppButton = ({ label, onClick }: AppButtonProps) => {
   return (
-    <button className="app-btn" onClick={onClick}>
+    <button type="submit" className="app-btn" onClick={onClick}>
       {label}
     </button>
   );

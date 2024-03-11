@@ -56,7 +56,7 @@ export const SetupProfile = () => {
       {({ values, handleSubmit, handleChange }) => {
         return (
           <>
-            <Form onSubmit={handleSubmit}>
+            <Form className="setup-profile" onSubmit={handleSubmit}>
               <h1>Almost there!</h1>
               <div className="input-container">
                 <StyledTextField

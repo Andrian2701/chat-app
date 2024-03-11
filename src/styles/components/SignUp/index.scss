@@ -1,6 +1,8 @@
 @use "../../abstracts/index.scss" as *;
 
-form {
+.sign-up,
+.sign-in,
+.setup-profile {
   @include form;
 
   @media (max-width: 500px) {
@@ -24,9 +26,7 @@ form {
     gap: 1rem;
 
     .error {
-      font-size: 0.8rem;
-      font-weight: 400;
-      color: red;
+      @include form-err-message;
     }
   }
 

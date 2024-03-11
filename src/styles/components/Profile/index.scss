@@ -13,13 +13,17 @@
     border: none;
   }
 
-  .inputs {
+  .edit-profile-form {
     display: flex;
     flex-direction: column;
     gap: 1rem;
 
     input {
       padding: 16.5px 14px;
+    }
+
+    .error {
+      @include form-err-message;
     }
   }
 }

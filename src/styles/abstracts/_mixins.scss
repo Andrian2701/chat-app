@@ -19,6 +19,12 @@
   border-radius: 0;
 }
 
+@mixin form-err-message {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: red;
+}
+
 @mixin grey-icon {
   font-size: 1.5rem;
   color: #b5b5b5;

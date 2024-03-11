@@ -1,7 +1,11 @@
+"use client";
+import { useEffect } from "react";
 import Image from "next/image";
-import { signInWithRedirect } from "firebase/auth";
+import { useRouter } from "next/navigation";
+import { getRedirectResult, signInWithRedirect } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 
-import { auth, provider } from "@/utils/firebase";
+import { auth, provider, db } from "@/utils/firebase";
 import googleIcon from "@/assets/google.png";
 import "@/styles/components/index.scss";
 
@@ -10,7 +14,24 @@ type GoogleButtonProps = {
 };
 
 export const GoogleAuth = ({ label }: GoogleButtonProps) => {
-  const handleAuthWithGoogle = () => signInWithRedirect(auth, provider);
+  const router = useRouter();
+
+  const handleAuthWithGoogle = () => {
+    signInWithRedirect(auth, provider);
+  };
+
+  useEffect(() => {
+    getRedirectResult(auth).then((result) => {
+      const user = result.user;
+
+      setDoc(doc(db, "users", user.uid), {
+        uid: user.uid,
+        name: user.displayName,
+        email: user.email,
+      });
+      router.push("/setup-profile");
+    });
+  }, []);
 
   return (
     <button

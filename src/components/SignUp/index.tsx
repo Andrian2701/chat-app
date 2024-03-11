@@ -1,12 +1,8 @@
 "use client";
-import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { doc, setDoc } from "firebase/firestore";
-import {
-  createUserWithEmailAndPassword,
-  onAuthStateChanged,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { styled, Divider, TextField } from "@mui/material";
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -49,31 +45,29 @@ export const SignUp = () => {
       .required("Password is required"),
   });
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setDoc(doc(db, "users", user.uid), {
-          uid: user.uid,
-          name: user.displayName,
-          email: user.email,
-        });
-        router.push("/setup-profile");
-      }
-    });
-  }, []);
-
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={(values, { setSubmitting }) => {
-        createUserWithEmailAndPassword(auth, values.email, values.password);
+        createUserWithEmailAndPassword(
+          auth,
+          values.email,
+          values.password
+        ).then((userCredential) => {
+          setDoc(doc(db, "users", userCredential.user.uid), {
+            uid: userCredential.user.uid,
+            name: userCredential.user.displayName,
+            email: userCredential.user.email,
+          });
+          router.push("/setup-profile");
+        });
         setSubmitting(false);
       }}
     >
       {({ values, handleSubmit, handleChange }) => {
         return (
-          <Form onSubmit={handleSubmit}>
+          <Form className="sign-up" onSubmit={handleSubmit}>
             <h1>Sign up to SyncTalk</h1>
             <GoogleAuth label="Sign up" />
             <Divider className="divider">or</Divider>
