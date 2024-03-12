@@ -1,0 +1,57 @@
+@use "../../abstracts/variables" as *;
+
+.chats-list {
+  overflow: hidden;
+  overflow-y: scroll;
+  height: 660px;
+
+  .chat {
+    height: 60.8px;
+    padding: 0.7rem 0.9rem 0.7rem 0.9rem;
+    transition-duration: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1rem;
+    cursor: pointer;
+
+    .avatar-container {
+      div {
+        width: 3.2rem;
+        height: 3.2rem;
+      }
+    }
+
+    &:hover {
+      background-color: $color-grey-hover;
+    }
+
+    .text {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      .top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .name {
+          font-weight: 500;
+          font-size: 1rem;
+        }
+
+        .time {
+          color: $color-grey;
+          font-size: 0.9rem;
+        }
+      }
+
+      .bottom {
+        color: $color-grey;
+        font-size: 0.9rem;
+      }
+    }
+  }
+}

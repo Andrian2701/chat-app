@@ -11,3 +11,4 @@ export * from "./SearchChats";
 export * from "./SignIn";
 export * from "./SignUp";
 export * from "./SetupProfile";
+export * from "./Chats";
