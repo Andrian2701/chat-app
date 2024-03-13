@@ -1,8 +1,9 @@
 "use client";
+import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useSearchParams, usePathname } from "next/navigation";
 import { doc, updateDoc } from "firebase/firestore";
-import { updateProfile } from "firebase/auth";
+import { updateProfile, onAuthStateChanged } from "firebase/auth";
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
@@ -10,7 +11,7 @@ import { ModalTop } from "../ModalTop";
 import { AppButton, SetAvatar, ModalBack } from "..";
 import { ProfileBar } from "../ProfileBar";
 import { StyledTextField } from "@/components";
-import { useGetCurrentUser } from "@/hooks/useGetCurrentUser";
+import { useGetUsers } from "@/hooks/useGetUsers";
 import { auth, db } from "@/utils/firebase";
 import "@/styles/components/index.scss";
 
@@ -24,11 +25,26 @@ export const Profile = () => {
   const pathname = usePathname();
   const profileModal = searchParams.get("profileModal");
   const router = useRouter();
-  const { currentUser } = useGetCurrentUser();
+  const [currentUserUid, setCurrentUserUid] = useState<string>("");
+  const { users } = useGetUsers();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setCurrentUserUid(user.uid);
+      }
+    });
+  }, []);
+
+  const currentUser = useMemo(
+    () => users?.filter((user) => user.uid === currentUserUid),
+    [users, currentUserUid]
+  );
+  const [user]: any = Array.isArray(currentUser) ? currentUser : [currentUser];
 
   const initialValues: FormValues = {
-    name: currentUser?.name || "",
-    bio: currentUser?.bio || "",
+    name: user?.name || "",
+    bio: user?.bio || "",
   };
 
   const validationSchema = Yup.object({
@@ -47,14 +63,14 @@ export const Profile = () => {
           <div className="profile-modal">
             <ModalTop pathname={pathname} label="Profile" />
             <ProfileBar className="profile-menu-modal">
-              <SetAvatar currentUserUid={currentUser?.uid} />
+              <SetAvatar currentUserUid={user?.uid} />
             </ProfileBar>
             <Formik
               initialValues={initialValues}
               validationSchema={validationSchema}
               enableReinitialize={true}
               onSubmit={(values, { setSubmitting }) => {
-                const userRef = doc(db, "users", currentUser?.uid);
+                const userRef = doc(db, "users", user?.uid);
 
                 updateDoc(userRef, {
                   name: values.name,

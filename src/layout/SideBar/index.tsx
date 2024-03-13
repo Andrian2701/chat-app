@@ -1,8 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
+import { onAuthStateChanged } from "firebase/auth";
 
 import { Chats, Hamburger, SearchChats } from "@/components";
+import { auth } from "@/utils/firebase";
 import { useGetUsers } from "@/hooks/useGetUsers";
 import "@/styles/layout/index.scss";
 
@@ -16,16 +18,30 @@ export type Users = {
 
 export const SideBar = () => {
   const { users, loading } = useGetUsers();
+  const [currentUserUid, setCurrentUserUid] = useState<string>("");
   const [filteredUsers, setFilteredUsers] = useState<Users[] | undefined>([]);
 
   useEffect(() => {
-    if (users !== null && users !== undefined) {
-      Object.keys(users).length > 0 && setFilteredUsers(users);
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setCurrentUserUid(user.uid);
+      }
+    });
+  }, []);
+
+  const currentUser = useMemo(
+    () => users?.filter((user) => user.uid !== currentUserUid),
+    [users, currentUserUid]
+  );
+
+  useEffect(() => {
+    if (currentUser !== null && currentUser !== undefined) {
+      Object.keys(currentUser).length > 0 && setFilteredUsers(currentUser);
     }
-  }, [users]);
+  }, [currentUser]);
 
   const handleFilterUsers = (searchTerm: string) => {
-    const filteredItems: Users[] | undefined = users?.filter((user) =>
+    const filteredItems: Users[] | undefined = currentUser?.filter((user) =>
       user.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 

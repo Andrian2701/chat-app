@@ -22,12 +22,12 @@ export const GoogleAuth = ({ label }: GoogleButtonProps) => {
 
   useEffect(() => {
     getRedirectResult(auth).then((result) => {
-      const user = result.user;
+      const user = result?.user;
 
-      setDoc(doc(db, "users", user.uid), {
-        uid: user.uid,
-        name: user.displayName,
-        email: user.email,
+      setDoc(doc(db, "users", user?.uid), {
+        uid: user?.uid,
+        name: user?.displayName,
+        email: user?.email,
       });
       router.push("/setup-profile");
     });

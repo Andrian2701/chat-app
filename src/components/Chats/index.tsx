@@ -27,27 +27,15 @@ export const Chats = ({ users, loading }: ChatsProps) => {
               <div className="text">
                 <div className="top">
                   <p className="name">
-                    <Skeleton
-                      variant="text"
-                      animation="wave"
-                      sx={{ width: 31.12, height: 19 }}
-                    />
+                    <Skeleton variant="text" animation="wave" width={31.12} />
                   </p>
                   <p className="time">
-                    <Skeleton
-                      variant="text"
-                      animation="wave"
-                      sx={{ width: 35.84, height: 17 }}
-                    />
+                    <Skeleton variant="text" animation="wave" width={35.84} />
                   </p>
                 </div>
                 <div className="bottom">
                   <p>
-                    <Skeleton
-                      variant="text"
-                      animation="wave"
-                      sx={{ height: 17 }}
-                    />
+                    <Skeleton variant="text" animation="wave" />
                   </p>
                 </div>
               </div>

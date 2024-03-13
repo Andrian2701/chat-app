@@ -1,11 +1,11 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
-import { StorageReference, getDownloadURL, ref } from "firebase/storage";
+import { onAuthStateChanged } from "firebase/auth";
 import { Avatar, Skeleton } from "@mui/material";
 
-import { useGetCurrentUser } from "@/hooks/useGetCurrentUser";
-import { storage } from "@/utils/firebase";
+import { useGetUsers } from "@/hooks/useGetUsers";
+import { auth } from "@/utils/firebase";
 import "@/styles/components/index.scss";
 
 type ProfileMenuProps = {
@@ -19,25 +19,25 @@ export const ProfileBar = ({
   children,
   onClick,
 }: ProfileMenuProps) => {
-  const { currentUser, loading } = useGetCurrentUser();
-  const [avatarLoad, setAvatarLoad] = useState<boolean>(true);
-  const [avatar, setAvatar] = useState<string>("");
-
-  const avatarPath: StorageReference = ref(
-    storage,
-    `users-avatars/${currentUser?.uid}`
-  );
+  const [currentUserUid, setCurrentUserUid] = useState<string>("");
+  const { users, loading } = useGetUsers();
 
   useEffect(() => {
-    getDownloadURL(avatarPath).then((url) => {
-      setAvatar(url);
-      setAvatarLoad(false);
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setCurrentUserUid(user.uid);
+      }
     });
-  }, [avatarPath]);
+  }, []);
+
+  const currentUser = useMemo(
+    () => users?.filter((user) => user.uid === currentUserUid),
+    [users, currentUserUid]
+  );
 
   return (
     <div className={className}>
-      {loading && avatarLoad ? (
+      {loading ? (
         <>
           <Skeleton
             variant="circular"
@@ -52,17 +52,17 @@ export const ProfileBar = ({
         </>
       ) : (
         <>
-          <Link
-            href="?profileModal=true"
-            key={currentUser?.name}
-            onClick={onClick}
-          >
-            <Avatar className="avatar" src={avatar} alt="profile">
-              {currentUser?.name.charAt(0)}
-            </Avatar>
-          </Link>
-          {children}
-          <p>{currentUser?.name}</p>
+          {currentUser?.map((user) => (
+            <>
+              <Link href="?profileModal=true" key={user.name} onClick={onClick}>
+                <Avatar className="avatar" src={user.avatar} alt="profile">
+                  {user.name.charAt(0)}
+                </Avatar>
+              </Link>
+              {children}
+              <p>{user.name}</p>
+            </>
+          ))}
         </>
       )}
     </div>
