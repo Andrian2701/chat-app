@@ -2,8 +2,13 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  text-decoration: none;
 }
 
 body {
   font-family: var(--var-roboto), sans-serif;
+}
+
+.main {
+  display: flex;
 }

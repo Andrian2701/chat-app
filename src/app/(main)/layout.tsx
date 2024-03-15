@@ -3,8 +3,10 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { onAuthStateChanged } from "firebase/auth";
 
-import { LogOut, Profile } from "@/components/index";
+import { LogOut, Profile } from "@/components";
 import { auth } from "@/utils/firebase";
+import { SideBar } from "@/layout";
+import "@/styles/main.scss";
 
 export default function MainLayout({
   children,
@@ -26,11 +28,12 @@ export default function MainLayout({
 
   if (isUserValid === true) {
     return (
-      <>
+      <div className="main">
+        <SideBar />
         {children}
         <LogOut />
         <Profile />
-      </>
+      </div>
     );
   }
 }

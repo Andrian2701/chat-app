@@ -4,6 +4,7 @@ import { Avatar, Skeleton } from "@mui/material";
 
 import { Users } from "@/layout";
 import "@/styles/components/index.scss";
+import Link from "next/link";
 
 type ChatsProps = {
   users: Users[] | undefined;
@@ -46,7 +47,7 @@ export const Chats = ({ users, loading }: ChatsProps) => {
         <>
           {users &&
             users.map((user) => (
-              <div className="chat" key={user.uid}>
+              <Link href="/chat" className="chat" key={user.uid}>
                 <div className="avatar-container">
                   <Avatar src={user.avatar} alt="avatar" />
                 </div>
@@ -59,7 +60,7 @@ export const Chats = ({ users, loading }: ChatsProps) => {
                     <p>How was your weekend?</p>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
         </>
       )}

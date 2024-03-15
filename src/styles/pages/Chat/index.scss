@@ -1,0 +1,124 @@
+@use "../../abstracts/index.scss" as *;
+
+.chat-page {
+  height: 100vh;
+  width: 65%;
+  background-color: $color-white;
+  position: relative;
+
+  @media (max-width: 764px) {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+  }
+
+  .chat-top-bar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 53.69px;
+    padding: 0.5rem 0.9rem 0.5rem 0.9rem;
+    background-color: $color-white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    border-bottom: 1px solid $color-grey-hover;
+
+    @media (min-width: 764px) {
+      width: 65%;
+    }
+
+    .chat-name {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+
+      .go-back {
+        @include grey-icon;
+
+        @media (min-width: 764px) {
+          display: none;
+        }
+      }
+
+      p {
+        font-size: 1rem;
+        font-weight: 500;
+      }
+    }
+
+    .top-icons {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      svg {
+        @include grey-icon;
+      }
+    }
+  }
+
+  .chat-field {
+    width: 100%;
+    max-height: 100vh;
+    overflow-y: hidden;
+    overflow: auto;
+    flex: 1;
+
+    img {
+      width: 100%;
+      height: 100vh;
+    }
+  }
+
+  .chat-bottom-bar {
+    width: 100%;
+    height: 53.69px;
+    position: fixed;
+    bottom: 0;
+    padding: 0.5rem 0.9rem 0.5rem 0.9rem;
+    background-color: $color-white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+
+    @media (min-width: 764px) {
+      width: 65%;
+    }
+
+    .share {
+      width: 90%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+
+      svg {
+        @include grey-icon;
+      }
+
+      .chat-input {
+        width: 100%;
+        color: $color-black;
+        font-size: 0.9rem;
+        border: none;
+
+        &:focus {
+          outline: none;
+        }
+
+        &::placeholder {
+          font-size: 0.9rem;
+          color: $color-grey;
+        }
+      }
+    }
+
+    svg {
+      @include grey-icon;
+    }
+  }
+}
