@@ -55,7 +55,11 @@ export const SideBar = () => {
         <SearchChats onChangeCallback={handleFilterUsers} />
       </div>
       <div className="side-bar-bottom">
-        <Chats users={filteredUsers} loading={loading} />
+        <Chats
+          users={filteredUsers}
+          currentUserUid={currentUserUid}
+          loading={loading}
+        />
       </div>
     </div>
   );

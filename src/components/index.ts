@@ -12,3 +12,4 @@ export * from "./SignIn";
 export * from "./SignUp";
 export * from "./SetupProfile";
 export * from "./Chats";
+export * from "./ChatInputBar";

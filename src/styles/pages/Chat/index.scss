@@ -14,9 +14,9 @@
   }
 
   .chat-top-bar {
-    position: fixed;
     top: 0;
     width: 100%;
+    // position: fixed;
     height: 53.69px;
     padding: 0.5rem 0.9rem 0.5rem 0.9rem;
     background-color: $color-white;
@@ -26,9 +26,9 @@
     gap: 1rem;
     border-bottom: 1px solid $color-grey-hover;
 
-    @media (min-width: 764px) {
-      width: 65%;
-    }
+    // @media (min-width: 764px) {
+    //   width: 65%;
+    // }
 
     .chat-name {
       display: flex;
@@ -57,68 +57,6 @@
       svg {
         @include grey-icon;
       }
-    }
-  }
-
-  .chat-field {
-    width: 100%;
-    max-height: 100vh;
-    overflow-y: hidden;
-    overflow: auto;
-    flex: 1;
-
-    img {
-      width: 100%;
-      height: 100vh;
-    }
-  }
-
-  .chat-bottom-bar {
-    width: 100%;
-    height: 53.69px;
-    position: fixed;
-    bottom: 0;
-    padding: 0.5rem 0.9rem 0.5rem 0.9rem;
-    background-color: $color-white;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-
-    @media (min-width: 764px) {
-      width: 65%;
-    }
-
-    .share {
-      width: 90%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-
-      svg {
-        @include grey-icon;
-      }
-
-      .chat-input {
-        width: 100%;
-        color: $color-black;
-        font-size: 0.9rem;
-        border: none;
-
-        &:focus {
-          outline: none;
-        }
-
-        &::placeholder {
-          font-size: 0.9rem;
-          color: $color-grey;
-        }
-      }
-    }
-
-    svg {
-      @include grey-icon;
     }
   }
 }

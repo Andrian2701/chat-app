@@ -1,5 +1,7 @@
 import { Roboto } from "next/font/google";
 
+import { AuthContextProvider } from "@/context/AuthContext";
+import { ChatContextProvider } from "@/context/ChatContext";
 import "@/styles/main.scss";
 
 const roboto = Roboto({
@@ -15,7 +17,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={roboto.variable}>{children}</body>
+      <AuthContextProvider>
+        <ChatContextProvider>
+          <body className={roboto.variable}>{children}</body>
+        </ChatContextProvider>
+      </AuthContextProvider>
     </html>
   );
 }

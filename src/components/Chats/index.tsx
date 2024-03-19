@@ -1,17 +1,40 @@
 "use client";
-
+import Link from "next/link";
+import { useContext } from "react";
+import { setDoc, getDoc, doc } from "firebase/firestore";
 import { Avatar, Skeleton } from "@mui/material";
 
 import { Users } from "@/layout";
+import { ChatContext } from "@/context/ChatContext";
+import { db } from "@/utils/firebase";
 import "@/styles/components/index.scss";
-import Link from "next/link";
 
 type ChatsProps = {
   users: Users[] | undefined;
+  currentUserUid: string;
   loading: boolean;
 };
 
-export const Chats = ({ users, loading }: ChatsProps) => {
+export const Chats = ({ users, currentUserUid, loading }: ChatsProps) => {
+  const { dispatch, chat } = useContext(ChatContext);
+  console.log(chat);
+
+  const handleChatSelect = async (user: Users) => {
+    const combinedId = user.uid + currentUserUid;
+
+    try {
+      const res = await getDoc(doc(db, "chats", combinedId));
+
+      if (!res.exists()) {
+        await setDoc(doc(db, "chats", combinedId), { messages: [] });
+      }
+    } catch (err) {}
+  };
+
+  const handleSelect = (u: any) => {
+    dispatch({ type: "CHANGE_USER", payload: u });
+  };
+
   return (
     <div className="chats-list">
       {loading ? (
@@ -47,7 +70,14 @@ export const Chats = ({ users, loading }: ChatsProps) => {
         <>
           {users &&
             users.map((user) => (
-              <Link href="/chat" className="chat" key={user.uid}>
+              <Link
+                href={`/chat/${user.name}`}
+                className="chat"
+                key={user.uid}
+                onClick={() => {
+                  handleChatSelect(user), handleSelect(user);
+                }}
+              >
                 <div className="avatar-container">
                   <Avatar src={user.avatar} alt="avatar" />
                 </div>

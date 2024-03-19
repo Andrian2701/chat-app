@@ -1,15 +1,20 @@
+"use client";
 import Link from "next/link";
-import Image from "next/image";
 import { RiArrowLeftLine } from "react-icons/ri";
 import { IoIosSearch } from "react-icons/io";
 import { HiOutlineDotsVertical } from "react-icons/hi";
-import { PiImage } from "react-icons/pi";
-import { GoSmiley } from "react-icons/go";
 
-import chatImg from "@/assets/chat.jpeg";
+import { Chat } from "@/components/Chat";
+import { ChatInputBar } from "@/components";
 import "@/styles/pages/index.scss";
 
-const ChatPage = () => {
+type ChatPageProps = {
+  params: {
+    name: string;
+  };
+};
+
+const ChatPage = ({ params: { name } }: ChatPageProps) => {
   return (
     <div className="chat-page">
       <div className="chat-top-bar">
@@ -17,23 +22,15 @@ const ChatPage = () => {
           <Link href="/" className="go-back">
             <RiArrowLeftLine />
           </Link>
-          <p>Name</p>
+          <p>{decodeURIComponent(name)}</p>
         </div>
         <div className="top-icons">
           <IoIosSearch />
           <HiOutlineDotsVertical />
         </div>
       </div>
-      <div className="chat-field">
-        <Image src={chatImg} alt="chat-theme" />
-      </div>
-      <div className="chat-bottom-bar">
-        <div className="share">
-          <PiImage />
-          <input className="chat-input" placeholder="Write a message..." />
-        </div>
-        <GoSmiley />
-      </div>
+      <Chat />
+      <ChatInputBar />
     </div>
   );
 };
