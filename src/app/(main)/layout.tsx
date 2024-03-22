@@ -1,39 +1,24 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { onAuthStateChanged } from "firebase/auth";
+import { ReactNode } from "react";
 
 import { LogOut, Profile } from "@/components";
-import { auth } from "@/utils/firebase";
 import { SideBar } from "@/layout";
+import { withAuth } from "@/utils/withAuth";
 import "@/styles/main.scss";
 
-export default function MainLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const router = useRouter();
-  const [isUserValid, setIsUserValid] = useState<boolean>(false);
+type MainLayoutProps = {
+  children: ReactNode;
+};
 
-  useEffect(() => {
-    const checkAuth = () => {
-      onAuthStateChanged(auth, (user) =>
-        user ? setIsUserValid(true) : router.push("/sign-in")
-      );
-    };
+const MainLayout = ({ children }: MainLayoutProps) => {
+  return (
+    <div className="main">
+      <SideBar />
+      <LogOut />
+      <Profile />
+      {children}
+    </div>
+  );
+};
 
-    checkAuth();
-  }, []);
-
-  if (isUserValid === true) {
-    return (
-      <div className="main">
-        <SideBar />
-        {children}
-        <LogOut />
-        <Profile />
-      </div>
-    );
-  }
-}
+export default withAuth(MainLayout);
