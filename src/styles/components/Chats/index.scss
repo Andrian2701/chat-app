@@ -3,7 +3,8 @@
 .chats-list {
   overflow: hidden;
   overflow-y: scroll;
-  height: 660px;
+  height: 100vh;
+  padding-top: 3.7rem;
 
   .chat {
     height: 60.8px;

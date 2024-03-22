@@ -1,10 +1,11 @@
 @use "../../abstracts/index.scss" as *;
 
 .chat-page {
-  height: 100vh;
   width: 65%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   background-color: $color-white;
-  position: relative;
 
   @media (max-width: 764px) {
     position: absolute;
@@ -16,8 +17,7 @@
   .chat-top-bar {
     top: 0;
     width: 100%;
-    // position: fixed;
-    height: 53.69px;
+    height: 3.5rem;
     padding: 0.5rem 0.9rem 0.5rem 0.9rem;
     background-color: $color-white;
     display: flex;
@@ -25,10 +25,6 @@
     justify-content: space-between;
     gap: 1rem;
     border-bottom: 1px solid $color-grey-hover;
-
-    // @media (min-width: 764px) {
-    //   width: 65%;
-    // }
 
     .chat-name {
       display: flex;

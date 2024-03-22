@@ -1,7 +1,6 @@
 "use client";
 import { useState, useContext } from "react";
-import { doc, Timestamp, updateDoc, arrayUnion } from "firebase/firestore";
-import { v4 as uuidv4 } from "uuid";
+import { doc, updateDoc, arrayUnion, Timestamp } from "firebase/firestore";
 import { PiImage } from "react-icons/pi";
 import { GoSmiley } from "react-icons/go";
 import { IoSendSharp } from "react-icons/io5";
@@ -11,7 +10,7 @@ import { AuthContext } from "@/context/AuthContext";
 import { db } from "@/utils/firebase";
 import "@/styles/components/index.scss";
 
-export const ChatInputBar = () => {
+export const ChatInputBar = ({ scroll }: any) => {
   const [message, setMessage] = useState<string>("");
   const { chat }: any = useContext(ChatContext);
   const { currentUser }: any = useContext(AuthContext);
@@ -20,14 +19,15 @@ export const ChatInputBar = () => {
     if (message.trim() !== "") {
       await updateDoc(doc(db, "chats", chat.chatId), {
         messages: arrayUnion({
-          id: uuidv4(),
-          user: currentUser.displayName,
-          message: message,
-          date: Timestamp.now(),
+          uid: currentUser.uid,
+          text: message,
+          createdAt: Timestamp.now(),
         }),
       });
-      setMessage("");
     }
+
+    setMessage("");
+    scroll.current.scrollIntoView({ behavior: "smooth" });
   };
 
   const handleSendOnKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {

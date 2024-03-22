@@ -4,6 +4,7 @@
   width: 100%;
   background-color: $color-white;
   border-right: 1px solid $color-grey-hover;
+  position: relative;
   z-index: 1;
 
   @media (min-width: 764px) {
@@ -11,16 +12,24 @@
     position: sticky;
     top: 0;
     bottom: 0;
-    height: 100vh;
   }
 
   .side-bar-top {
-    padding: 0.5rem 0.9rem 0.5rem 0.9rem;
+    height: 3.5rem;
+    width: 100%;
+    position: fixed;
     background-color: $color-white;
+    padding: 0.5rem 0.9rem 0.5rem 0.9rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
+    z-index: 2;
+    border-right: 1px solid $color-grey-hover;
+
+    @media (min-width: 764px) {
+      width: 35%;
+    }
 
     input {
       width: 100%;

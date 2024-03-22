@@ -16,11 +16,13 @@ type ChatsProps = {
 };
 
 export const Chats = ({ users, currentUserUid, loading }: ChatsProps) => {
-  const { dispatch, chat } = useContext(ChatContext);
-  console.log(chat);
+  const { dispatch } = useContext(ChatContext);
 
   const handleChatSelect = async (user: Users) => {
-    const combinedId = user.uid + currentUserUid;
+    const combinedId =
+      currentUserUid > user.uid
+        ? currentUserUid + user.uid
+        : user.uid + currentUserUid;
 
     try {
       const res = await getDoc(doc(db, "chats", combinedId));
