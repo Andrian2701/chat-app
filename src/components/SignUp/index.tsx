@@ -32,6 +32,7 @@ type FormValues = {
 
 export const SignUp = () => {
   const router = useRouter();
+
   const initialValues: FormValues = {
     email: "",
     password: "",
@@ -60,8 +61,10 @@ export const SignUp = () => {
             name: userCredential.user.displayName,
             email: userCredential.user.email,
           });
+
           router.push("/setup-profile");
         });
+
         setSubmitting(false);
       }}
     >
@@ -92,7 +95,7 @@ export const SignUp = () => {
               <ErrorMessage name="password" component="div" className="error" />
             </div>
             <div className="nav">
-              <AppButton label="Sign up" />
+              <AppButton label="Next" />
               <div className="to-sign-in">
                 Have an account?
                 <Link href="/sign-in">Sign in</Link>

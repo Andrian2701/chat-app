@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useContext } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -7,7 +7,8 @@ import { Divider } from "@mui/material";
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import { AppButton, GoogleAuth, SnackBar } from "@/components";
+import { AppButton, GoogleAuth, Alert } from "@/components";
+import { AlertContext, SET_ALERT } from "@/context/AlertContext";
 import { StyledTextField } from "../SignUp";
 import { auth } from "@/utils/firebase";
 import "@/styles/components/index.scss";
@@ -18,7 +19,7 @@ type FormValues = {
 };
 
 export const SignIn = () => {
-  const [alertLabel, setAlertLabel] = useState<string | null>(null);
+  const { dispatch }: any = useContext(AlertContext);
   const router = useRouter();
 
   const initialValues: FormValues = {
@@ -41,12 +42,22 @@ export const SignIn = () => {
       onSubmit={(values, { setSubmitting }) => {
         signInWithEmailAndPassword(auth, values.email, values.password)
           .then(() => {
-            setAlertLabel("Redirect...");
-            setTimeout(() => router.push("/"), 2000);
+            dispatch({
+              type: SET_ALERT,
+              payload: "Successfull Authentification.",
+            });
+            setTimeout(() => {
+              dispatch({ type: "SET_ALERT", payload: null });
+              router.push("/");
+            }, 2000);
           })
           .catch(() => {
-            setAlertLabel("Email or password isn't correct. Please try.");
+            dispatch({
+              type: SET_ALERT,
+              payload: "Email or password isn't correct. Please try.",
+            });
           });
+
         setSubmitting(false);
       }}
     >
@@ -89,7 +100,7 @@ export const SignIn = () => {
                 </div>
               </div>
             </Form>
-            <SnackBar alertLabel={alertLabel} />
+            <Alert />
           </>
         );
       }}

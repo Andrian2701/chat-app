@@ -1,41 +1,41 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Snackbar, SnackbarOrigin } from "@mui/material";
+
+import { AlertContext } from "@/context/AlertContext";
 
 interface State extends SnackbarOrigin {
   open: boolean;
 }
 
-type AlertProps = {
-  alertLabel: null | string;
-};
-
-export const SnackBar = ({ alertLabel }: AlertProps) => {
+export const Alert = () => {
   const [state, setState] = useState<State>({
     open: false,
     vertical: "bottom",
     horizontal: "center",
   });
   const { vertical, horizontal, open } = state;
+  const { alert } = useContext(AlertContext);
 
   useEffect(() => {
-    alertLabel !== null && typeof alertLabel === "string" && handleOpen();
-  }, [alertLabel]);
+    alert !== null && typeof alert === "string" ? handleOpen() : handleClose();
+  }, [alert]);
 
   const handleOpen = () => setState({ ...state, open: true });
+  const handleClose = () => setState({ ...state, open: false });
 
   return (
     <Snackbar
       ContentProps={{
         sx: {
           backgroundColor: "rgb(29, 155, 240)",
-          color: "#ffffff",
+          color: "#fff",
           boxShadow: "0 0 5px rgba(0, 0, 0, 0.1)",
         },
       }}
       anchorOrigin={{ vertical, horizontal }}
       open={open}
-      message={alertLabel}
+      message={alert}
     />
   );
 };

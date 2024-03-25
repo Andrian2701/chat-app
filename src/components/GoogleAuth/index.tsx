@@ -1,10 +1,11 @@
 "use client";
-import { useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { getRedirectResult, signInWithRedirect } from "firebase/auth";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 
+import { AlertContext, SET_ALERT } from "@/context/AlertContext";
 import { auth, provider, db } from "@/utils/firebase";
 import googleIcon from "@/assets/google.png";
 import "@/styles/components/index.scss";
@@ -14,6 +15,7 @@ type Props = {
 };
 
 export const GoogleAuth = ({ label }: Props) => {
+  const { dispatch } = useContext(AlertContext);
   const router = useRouter();
 
   const handleAuthWithGoogle = () => signInWithRedirect(auth, provider);
@@ -32,9 +34,20 @@ export const GoogleAuth = ({ label }: Props) => {
           name: user.displayName,
           email: user.email,
         });
+
         router.push("/setup-profile");
       } else {
-        router.push("/");
+        dispatch({
+          type: SET_ALERT,
+          payload: "Successfull Authentification.",
+        });
+        setTimeout(() => {
+          dispatch({
+            type: SET_ALERT,
+            payload: null,
+          });
+          router.push("/");
+        }, 2000);
       }
     };
 
@@ -42,13 +55,15 @@ export const GoogleAuth = ({ label }: Props) => {
   }, [router]);
 
   return (
-    <button
-      type="button"
-      className="google-auth-btn"
-      onClick={handleAuthWithGoogle}
-    >
-      <Image src={googleIcon} alt="google-icon" width={20} height={20} />
-      <p>{label} with Google</p>
-    </button>
+    <>
+      <button
+        type="button"
+        className="google-auth-btn"
+        onClick={handleAuthWithGoogle}
+      >
+        <Image src={googleIcon} alt="google-icon" width={20} height={20} />
+        <p>{label} with Google</p>
+      </button>
+    </>
   );
 };

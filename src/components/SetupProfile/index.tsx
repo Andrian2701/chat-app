@@ -1,14 +1,15 @@
 "use client";
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { useRouter } from "next/navigation";
 import { doc, updateDoc } from "firebase/firestore";
 import { updateProfile } from "firebase/auth";
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import { SnackBar, AppButton } from "@/components";
+import { Alert, AppButton } from "@/components";
 import { StyledTextField } from "../SignUp";
 import { AuthContext } from "@/context/AuthContext";
+import { AlertContext, SET_ALERT } from "@/context/AlertContext";
 import { db } from "@/utils/firebase";
 import "@/styles/components/index.scss";
 
@@ -19,7 +20,7 @@ type FormValues = {
 
 export const SetupProfile = () => {
   const { currentUser } = useContext(AuthContext);
-  const [alertLabel, setAlertLabel] = useState<null | string>(null);
+  const { dispatch } = useContext(AlertContext);
   const router = useRouter();
 
   const initialValues: FormValues = {
@@ -40,8 +41,7 @@ export const SetupProfile = () => {
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={(values, { setSubmitting }) => {
-        const currentUserRef = doc(db, "users", currentUser.uid);
-        updateDoc(currentUserRef, {
+        updateDoc(doc(db, "users", currentUser.uid), {
           name: values.name,
           bio: values.bio,
         });
@@ -49,8 +49,18 @@ export const SetupProfile = () => {
           displayName: values.name,
         });
 
-        setAlertLabel("Redirect...");
-        setTimeout(() => router.push("/"), 2000);
+        dispatch({
+          type: SET_ALERT,
+          payload: "Welcome to Evertalk!",
+        });
+        setTimeout(() => {
+          dispatch({
+            type: SET_ALERT,
+            payload: null,
+          });
+          router.push("/");
+        }, 2000);
+
         setSubmitting(false);
       }}
     >
@@ -85,7 +95,7 @@ export const SetupProfile = () => {
                 <AppButton label="Start" />
               </div>
             </Form>
-            <SnackBar alertLabel={alertLabel} />
+            <Alert />
           </>
         );
       }}

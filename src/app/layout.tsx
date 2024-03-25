@@ -3,6 +3,7 @@ import { Roboto } from "next/font/google";
 import { AuthContextProvider } from "@/context/AuthContext";
 import { UsersContextProvider } from "@/context/UsersContext";
 import { ChatContextProvider } from "@/context/ChatContext";
+import { AlertContextProvider } from "@/context/AlertContext";
 import "@/styles/index.scss";
 
 const roboto = Roboto({
@@ -17,7 +18,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       <AuthContextProvider>
         <UsersContextProvider>
           <ChatContextProvider>
-            <body className={roboto.variable}>{children}</body>
+            <AlertContextProvider>
+              <body className={roboto.variable}>{children}</body>
+            </AlertContextProvider>
           </ChatContextProvider>
         </UsersContextProvider>
       </AuthContextProvider>

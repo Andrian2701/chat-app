@@ -3,7 +3,7 @@ import { createContext, useContext, useReducer } from "react";
 
 import { AuthContext } from "./AuthContext";
 
-export const ChatContext = createContext();
+export const ChatContext = createContext<any>(null);
 const CHANGE_USER = "CHANGE_USER";
 
 export const ChatContextProvider = ({ children }: any) => {

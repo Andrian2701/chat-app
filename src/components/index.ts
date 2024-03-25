@@ -14,4 +14,4 @@ export * from "./SetAvatar";
 export * from "./SetupProfile";
 export * from "./SignIn";
 export * from "./SignUp";
-export * from "./SnackBar";
+export * from "./Alert";
