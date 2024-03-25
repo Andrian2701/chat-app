@@ -1,50 +1,29 @@
-import { useEffect, useState } from "react";
-import { collection, onSnapshot } from "firebase/firestore";
-import { getDownloadURL, ref } from "firebase/storage";
+import { useContext, useEffect, useState } from "react";
+import { collection, onSnapshot, query } from "firebase/firestore";
 
-import { db, storage } from "../utils/firebase";
-
-type Users = {
-  bio: string;
-  email: string;
-  name: string;
-  uid: string;
-  avatar: string;
-};
+import { db } from "../utils/firebase";
+import { Users } from "@/types";
+import { AuthContext } from "@/context/AuthContext";
 
 export const useGetUsers = () => {
+  const { currentUser } = useContext(AuthContext);
   const [users, setUsers] = useState<Users[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const unsubscribeFirestore = onSnapshot(
-      collection(db, "users"),
-      async (snapshot) => {
-        const fetchedUsers: Users[] = [];
-        const promises: Promise<void>[] = [];
+    const q = query(collection(db, "users"));
 
-        snapshot.forEach((doc) => {
-          const userData = doc.data() as Users;
-          const avatarRef = ref(storage, `users-avatars/${userData.uid}`);
-          const promise = getDownloadURL(avatarRef)
-            .then((avatarUrl) => {
-              fetchedUsers.push({ ...userData, avatar: avatarUrl });
-            })
-            .catch(() => {
-              fetchedUsers.push({ ...userData, avatar: "" });
-            });
-          promises.push(promise);
-        });
+    const unsub = onSnapshot(q, (querySnapshot) => {
+      const data: any[] = [];
+      querySnapshot.forEach((doc) => {
+        data.push({ ...doc.data() });
+      });
+      setUsers(data);
+      setLoading(false);
+    });
 
-        await Promise.all(promises);
-
-        setLoading(false);
-        setUsers(fetchedUsers);
-      }
-    );
-
-    return () => unsubscribeFirestore();
-  }, []);
+    return () => unsub();
+  }, [currentUser]);
 
   return { users, loading };
 };

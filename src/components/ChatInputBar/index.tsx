@@ -13,7 +13,7 @@ import "@/styles/components/index.scss";
 export const ChatInputBar = ({ scroll }: any) => {
   const [message, setMessage] = useState<string>("");
   const { chat }: any = useContext(ChatContext);
-  const { currentUser }: any = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
 
   const handleSendMessage = async () => {
     if (message.trim() !== "") {

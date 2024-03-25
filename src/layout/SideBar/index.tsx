@@ -1,11 +1,10 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
-import { onAuthStateChanged } from "firebase/auth";
+import { useState, useEffect, useMemo, useContext } from "react";
 
 import { Chats, Hamburger, SearchChats } from "@/components";
-import { auth } from "@/utils/firebase";
-import { useGetUsers } from "@/hooks/useGetUsers";
+import { UsersContext } from "@/context/UsersContext";
+import { AuthContext } from "@/context/AuthContext";
 import "@/styles/layout/index.scss";
 
 export type Users = {
@@ -17,36 +16,32 @@ export type Users = {
 };
 
 export const SideBar = () => {
-  const { users, loading } = useGetUsers();
-  const [currentUserUid, setCurrentUserUid] = useState<string>("");
+  const { users, loading } = useContext(UsersContext);
+  const { currentUser } = useContext(AuthContext);
   const [filteredUsers, setFilteredUsers] = useState<Users[] | undefined>([]);
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setCurrentUserUid(user.uid);
-      }
-    });
-  }, []);
-
-  const currentUser = useMemo(
-    () => users?.filter((user) => user.uid !== currentUserUid),
-    [users, currentUserUid]
-  );
+  const currentUserData = useMemo(() => {
+    return currentUser
+      ? users?.filter((user) => user.uid !== currentUser.uid)
+      : null;
+  }, [users, currentUser]);
 
   useEffect(() => {
-    if (currentUser !== null && currentUser !== undefined) {
-      Object.keys(currentUser).length > 0 && setFilteredUsers(currentUser);
+    if (currentUserData !== null && currentUserData !== undefined) {
+      Object.keys(currentUserData).length > 0 &&
+        setFilteredUsers(currentUserData);
     }
-  }, [currentUser]);
+  }, [currentUserData]);
 
   const handleFilterUsers = (searchTerm: string) => {
-    const filteredItems: Users[] | undefined = currentUser?.filter((user) =>
+    const filteredItems: Users[] | undefined = currentUserData?.filter((user) =>
       user.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     setFilteredUsers(filteredItems);
   };
+
+  console.log(users);
 
   return (
     <div className="side-bar">
@@ -55,11 +50,7 @@ export const SideBar = () => {
         <SearchChats onChangeCallback={handleFilterUsers} />
       </div>
       <div className="side-bar-bottom">
-        <Chats
-          users={filteredUsers}
-          currentUserUid={currentUserUid}
-          loading={loading}
-        />
+        <Chats users={filteredUsers} loading={loading} />
       </div>
     </div>
   );

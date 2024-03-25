@@ -1,11 +1,10 @@
 "use client";
-import { useState, useEffect, useMemo } from "react";
+import { useMemo, useContext } from "react";
 import Link from "next/link";
-import { onAuthStateChanged } from "firebase/auth";
 import { Avatar, Skeleton } from "@mui/material";
 
-import { useGetUsers } from "@/hooks/useGetUsers";
-import { auth } from "@/utils/firebase";
+import { AuthContext } from "@/context/AuthContext";
+import { UsersContext } from "@/context/UsersContext";
 import "@/styles/components/index.scss";
 
 type ProfileMenuProps = {
@@ -19,21 +18,14 @@ export const ProfileBar = ({
   children,
   onClick,
 }: ProfileMenuProps) => {
-  const [currentUserUid, setCurrentUserUid] = useState<string>("");
-  const { users, loading } = useGetUsers();
+  const { currentUser } = useContext(AuthContext);
+  const { users, loading } = useContext(UsersContext);
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setCurrentUserUid(user.uid);
-      }
-    });
-  }, []);
-
-  const currentUser = useMemo(
-    () => users?.filter((user) => user.uid === currentUserUid),
-    [users, currentUserUid]
-  );
+  const currentUserData = useMemo(() => {
+    return currentUser
+      ? users?.filter((user) => user.uid === currentUser.uid)
+      : null;
+  }, [users, currentUser]);
 
   return (
     <div className={className}>
@@ -52,7 +44,7 @@ export const ProfileBar = ({
         </>
       ) : (
         <>
-          {currentUser?.map((user) => (
+          {currentUserData?.map((user) => (
             <>
               <Link href="?profileModal=true" key={user.name} onClick={onClick}>
                 <Avatar className="avatar" src={user.avatar} alt="profile">

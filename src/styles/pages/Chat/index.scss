@@ -2,29 +2,32 @@
 
 .chat-page {
   width: 65%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  height: 100vh;
   background-color: $color-white;
+  position: relative;
 
   @media (max-width: 764px) {
     position: absolute;
     width: 100%;
-    height: 100%;
     z-index: 2;
   }
 
   .chat-top-bar {
-    top: 0;
-    width: 100%;
     height: 3.5rem;
+    width: 65%;
+    position: fixed;
     padding: 0.5rem 0.9rem 0.5rem 0.9rem;
     background-color: $color-white;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
+    z-index: 2;
     border-bottom: 1px solid $color-grey-hover;
+
+    @media (max-width: 764px) {
+      width: 100%;
+    }
 
     .chat-name {
       display: flex;

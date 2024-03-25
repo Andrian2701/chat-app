@@ -1,3 +1,4 @@
+"use client";
 import { useContext } from "react";
 
 import { AuthContext } from "@/context/AuthContext";
@@ -12,7 +13,7 @@ type Message = {
 };
 
 export const Message = ({ text, createdAt, uid }: Message) => {
-  const { currentUser }: any = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
 
   const handleFormatTime = (date: any) => {
     const hours = date.getHours().toString().padStart(2, "0");
@@ -21,7 +22,7 @@ export const Message = ({ text, createdAt, uid }: Message) => {
   };
 
   return (
-    <div className={uid && uid === currentUser.uid ? "sender-m" : "m"}>
+    <div className={currentUser && uid === currentUser.uid ? "sender-m" : "m"}>
       <p>
         <span className="m-text">{text}</span>
         <span className="m-date">

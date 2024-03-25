@@ -4,25 +4,28 @@ import { useContext } from "react";
 import { setDoc, getDoc, doc } from "firebase/firestore";
 import { Avatar, Skeleton } from "@mui/material";
 
-import { Users } from "@/layout";
 import { ChatContext } from "@/context/ChatContext";
+import { AuthContext } from "@/context/AuthContext";
 import { db } from "@/utils/firebase";
+import { Users } from "@/types";
 import "@/styles/components/index.scss";
 
 type ChatsProps = {
   users: Users[] | undefined;
-  currentUserUid: string;
   loading: boolean;
 };
 
-export const Chats = ({ users, currentUserUid, loading }: ChatsProps) => {
-  const { dispatch } = useContext(ChatContext);
+export const Chats = ({ users, loading }: ChatsProps) => {
+  const { dispatch }: any = useContext(ChatContext);
+  const { currentUser } = useContext(AuthContext);
 
   const handleChatSelect = async (user: Users) => {
+    if (!currentUser) return;
+
     const combinedId =
-      currentUserUid > user.uid
-        ? currentUserUid + user.uid
-        : user.uid + currentUserUid;
+      currentUser.uid > user.uid
+        ? currentUser.uid + user.uid
+        : user.uid + currentUser.uid;
 
     try {
       const res = await getDoc(doc(db, "chats", combinedId));

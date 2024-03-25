@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useContext } from "react";
 import { useRouter } from "next/navigation";
 import { useSearchParams, usePathname } from "next/navigation";
 import { doc, updateDoc } from "firebase/firestore";
@@ -11,8 +11,9 @@ import { ModalTop } from "../ModalTop";
 import { AppButton, SetAvatar, ModalBack } from "..";
 import { ProfileBar } from "../ProfileBar";
 import { StyledTextField } from "@/components";
-import { useGetUsers } from "@/hooks/useGetUsers";
 import { auth, db } from "@/utils/firebase";
+import { AuthContext } from "@/context/AuthContext";
+import { UsersContext } from "@/context/UsersContext";
 import "@/styles/components/index.scss";
 
 type FormValues = {
@@ -25,22 +26,18 @@ export const Profile = () => {
   const pathname = usePathname();
   const profileModal = searchParams.get("profileModal");
   const router = useRouter();
-  const [currentUserUid, setCurrentUserUid] = useState<string>("");
-  const { users } = useGetUsers();
+  const { currentUser } = useContext(AuthContext);
+  const { users } = useContext(UsersContext);
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setCurrentUserUid(user.uid);
-      }
-    });
-  }, []);
+  const currentUserData = useMemo(() => {
+    return currentUser
+      ? users?.filter((user) => user.uid === currentUser.uid)
+      : null;
+  }, [users, currentUser]);
 
-  const currentUser = useMemo(
-    () => users?.filter((user) => user.uid === currentUserUid),
-    [users, currentUserUid]
-  );
-  const [user]: any = Array.isArray(currentUser) ? currentUser : [currentUser];
+  const [user]: any = Array.isArray(currentUserData)
+    ? currentUserData
+    : [currentUserData];
 
   const initialValues: FormValues = {
     name: user?.name || "",
@@ -55,6 +52,10 @@ export const Profile = () => {
     bio: Yup.string().min(4, "Required min 4").max(100, "Required max 100"),
   });
 
+  console.log("current", currentUser);
+  console.log("users", users);
+  console.log("test", user);
+
   return (
     <>
       {profileModal && (
@@ -63,16 +64,14 @@ export const Profile = () => {
           <div className="profile-modal">
             <ModalTop pathname={pathname} label="Profile" />
             <ProfileBar className="profile-menu-modal">
-              <SetAvatar currentUserUid={user?.uid} />
+              <SetAvatar />
             </ProfileBar>
             <Formik
               initialValues={initialValues}
               validationSchema={validationSchema}
               enableReinitialize={true}
               onSubmit={(values, { setSubmitting }) => {
-                const userRef = doc(db, "users", user?.uid);
-
-                updateDoc(userRef, {
+                updateDoc(doc(db, "users", currentUser.uid), {
                   name: values.name,
                   bio: values.bio,
                 });

@@ -38,7 +38,7 @@ export const ChatMessages = forwardRef(
         {messages &&
           messages.map((m) => (
             <Message
-              key={m.uid}
+              key={m.createdAt.seconds}
               uid={m.uid}
               text={m.text}
               createdAt={m.createdAt}

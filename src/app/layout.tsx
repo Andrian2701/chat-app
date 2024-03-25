@@ -1,6 +1,7 @@
 import { Roboto } from "next/font/google";
 
 import { AuthContextProvider } from "@/context/AuthContext";
+import { UsersContextProvider } from "@/context/UsersContext";
 import { ChatContextProvider } from "@/context/ChatContext";
 import "@/styles/main.scss";
 
@@ -10,18 +11,18 @@ const roboto = Roboto({
   variable: "--var-roboto",
 });
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
       <AuthContextProvider>
-        <ChatContextProvider>
-          <body className={roboto.variable}>{children}</body>
-        </ChatContextProvider>
+        <UsersContextProvider>
+          <ChatContextProvider>
+            <body className={roboto.variable}>{children}</body>
+          </ChatContextProvider>
+        </UsersContextProvider>
       </AuthContextProvider>
     </html>
   );
-}
+};
+
+export default RootLayout;

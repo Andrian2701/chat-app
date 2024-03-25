@@ -1,8 +1,8 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useContext } from "react";
 import { useRouter } from "next/navigation";
 import { doc, updateDoc } from "firebase/firestore";
-import { updateProfile, onAuthStateChanged } from "firebase/auth";
+import { updateProfile } from "firebase/auth";
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
@@ -10,6 +10,7 @@ import { SnackBar, AppButton } from "@/components/index";
 import { StyledTextField } from "../SignUp";
 import { auth, db } from "@/utils/firebase";
 import "@/styles/components/index.scss";
+import { AuthContext } from "@/context/AuthContext";
 
 type FormValues = {
   name: string;
@@ -17,17 +18,9 @@ type FormValues = {
 };
 
 export const SetupProfile = () => {
-  const router = useRouter();
+  const { currentUser } = useContext(AuthContext);
   const [alertLabel, setAlertLabel] = useState<null | string>(null);
-  const [currentUserUid, setCurrentUserUid] = useState<string>("");
-
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setCurrentUserUid(user.uid);
-      }
-    });
-  }, []);
+  const router = useRouter();
 
   const initialValues: FormValues = {
     name: "",
@@ -47,7 +40,7 @@ export const SetupProfile = () => {
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={(values, { setSubmitting }) => {
-        const currentUserRef = doc(db, "users", currentUserUid);
+        const currentUserRef = doc(db, "users", currentUser.uid);
         updateDoc(currentUserRef, {
           name: values.name,
           bio: values.bio,
