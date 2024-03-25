@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Backdrop } from "@mui/material";
 
-export const ModalBack = () => {
+export const ModalOverlay = () => {
   const [open] = useState<boolean>(true);
 
   return (

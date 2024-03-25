@@ -10,16 +10,16 @@ import { db } from "@/utils/firebase";
 import { Users } from "@/types";
 import "@/styles/components/index.scss";
 
-type ChatsProps = {
+type Props = {
   users: Users[] | undefined;
   loading: boolean;
 };
 
-export const Chats = ({ users, loading }: ChatsProps) => {
-  const { dispatch }: any = useContext(ChatContext);
+export const ChatList = ({ users, loading }: Props) => {
   const { currentUser } = useContext(AuthContext);
+  const { dispatch }: any = useContext(ChatContext);
 
-  const handleChatSelect = async (user: Users) => {
+  const handleUserSelect = async (user: Users) => {
     if (!currentUser) return;
 
     const combinedId =
@@ -27,34 +27,32 @@ export const Chats = ({ users, loading }: ChatsProps) => {
         ? currentUser.uid + user.uid
         : user.uid + currentUser.uid;
 
-    try {
-      const res = await getDoc(doc(db, "chats", combinedId));
+    const chatsRef = doc(db, "chats", combinedId);
+    const res = await getDoc(chatsRef);
 
-      if (!res.exists()) {
-        await setDoc(doc(db, "chats", combinedId), { messages: [] });
-      }
-    } catch (err) {}
+    if (!res.exists()) {
+      await setDoc(chatsRef, { messages: [] });
+    }
   };
 
-  const handleSelect = (u: any) => {
+  const handleChatSelect = (u: any) =>
     dispatch({ type: "CHANGE_USER", payload: u });
-  };
 
   return (
-    <div className="chats-list">
+    <div className="chat-list">
       {loading ? (
         <>
           {Array.from({ length: 11 }).map((_, index) => (
             <div className="chat" key={index}>
-              <div className="avatar-container">
+              <div className="flex-left">
                 <Skeleton
                   variant="circular"
                   animation="wave"
                   sx={{ width: "3.2rem", height: "3.2rem" }}
                 />
               </div>
-              <div className="text">
-                <div className="top">
+              <div className="flex-right">
+                <div className="flex-top">
                   <p className="name">
                     <Skeleton variant="text" animation="wave" width={31.12} />
                   </p>
@@ -62,7 +60,7 @@ export const Chats = ({ users, loading }: ChatsProps) => {
                     <Skeleton variant="text" animation="wave" width={35.84} />
                   </p>
                 </div>
-                <div className="bottom">
+                <div className="flex-bottom">
                   <p>
                     <Skeleton variant="text" animation="wave" />
                   </p>
@@ -76,22 +74,22 @@ export const Chats = ({ users, loading }: ChatsProps) => {
           {users &&
             users.map((user) => (
               <Link
+                key={user.uid}
                 href={`/chat/${user.name}`}
                 className="chat"
-                key={user.uid}
                 onClick={() => {
-                  handleChatSelect(user), handleSelect(user);
+                  handleUserSelect(user), handleChatSelect(user);
                 }}
               >
-                <div className="avatar-container">
+                <div className="flex-left">
                   <Avatar src={user.avatar} alt="avatar" />
                 </div>
-                <div className="text">
-                  <div className="top">
+                <div className="flex-right">
+                  <div className="flex-top">
                     <p className="name">{user.name}</p>
                     <p className="time">17:00</p>
                   </div>
-                  <div className="bottom">
+                  <div className="flex-bottom">
                     <p>How was your weekend?</p>
                   </div>
                 </div>

@@ -7,7 +7,7 @@
 .MuiPaper-root {
   width: 19.5rem;
 
-  .top {
+  .flex-top {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -19,7 +19,7 @@
     }
   }
 
-  .bottom {
+  .flex-bottom {
     padding-top: 0.5rem;
   }
 }

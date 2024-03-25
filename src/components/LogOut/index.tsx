@@ -1,10 +1,10 @@
-"use client";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSearchParams, usePathname } from "next/navigation";
 import { signOut } from "firebase/auth";
+import { RiArrowLeftLine } from "react-icons/ri";
 
-import { ModalBack, ModalTop } from "..";
-import { AppButton } from "..";
+import { AppButton, ModalOverlay } from "@/components";
 import { auth } from "@/utils/firebase";
 import "@/styles/components/index.scss";
 
@@ -24,9 +24,14 @@ export const LogOut = () => {
     <>
       {logOutModal && (
         <>
-          <ModalBack />
+          <ModalOverlay />
           <div className="log-out-modal">
-            <ModalTop pathname={pathname} label="Log out" />
+            <div className="modal-top">
+              <Link href={pathname}>
+                <RiArrowLeftLine />
+              </Link>
+              <h1>Log out</h1>
+            </div>
             <p>
               Logging out now will end your current session. You can always log
               back in at any time to continue where you left off.

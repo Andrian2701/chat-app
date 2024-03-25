@@ -10,13 +10,13 @@ export const withAuth = <P extends object>(
     const router = useRouter();
 
     useEffect(() => {
-      const unsubscribe = auth.onAuthStateChanged((user) => {
+      const unsub = auth.onAuthStateChanged((user) => {
         if (!user) {
           router.push("/sign-in");
         }
       });
 
-      return () => unsubscribe();
+      return () => unsub();
     }, [router]);
 
     return <WrappedComponent {...props} />;

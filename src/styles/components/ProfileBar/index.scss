@@ -1,6 +1,6 @@
 @use "../../abstracts/variables" as *;
 
-.profile-menu {
+.profile-bar {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -22,8 +22,8 @@
   }
 }
 
-.profile-menu-modal {
-  @extend .profile-menu;
+.auth-profile-menu {
+  @extend .profile-bar;
   position: relative;
 
   a {

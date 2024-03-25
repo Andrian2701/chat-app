@@ -7,8 +7,7 @@ import { Divider } from "@mui/material";
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import { AppButton, GoogleAuth } from "@/components/index";
-import { SnackBar } from "@/components/index";
+import { AppButton, GoogleAuth, SnackBar } from "@/components";
 import { StyledTextField } from "../SignUp";
 import { auth } from "@/utils/firebase";
 import "@/styles/components/index.scss";

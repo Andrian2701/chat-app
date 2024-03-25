@@ -11,4 +11,8 @@
   p {
     color: $color-grey;
   }
+
+  .modal-top {
+    @include modal-top;
+  }
 }

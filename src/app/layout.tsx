@@ -3,7 +3,7 @@ import { Roboto } from "next/font/google";
 import { AuthContextProvider } from "@/context/AuthContext";
 import { UsersContextProvider } from "@/context/UsersContext";
 import { ChatContextProvider } from "@/context/ChatContext";
-import "@/styles/main.scss";
+import "@/styles/index.scss";
 
 const roboto = Roboto({
   subsets: ["latin"],

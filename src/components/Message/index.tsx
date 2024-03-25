@@ -2,20 +2,13 @@
 import { useContext } from "react";
 
 import { AuthContext } from "@/context/AuthContext";
+import { ChatMessage } from "@/types";
+import "@/styles/components/index.scss";
 
-type Message = {
-  uid: string;
-  text: string;
-  createdAt: {
-    seconds: number;
-    nanoseconds: number;
-  };
-};
-
-export const Message = ({ text, createdAt, uid }: Message) => {
+export const Message = ({ text, createdAt, uid }: ChatMessage) => {
   const { currentUser } = useContext(AuthContext);
 
-  const handleFormatTime = (date: any) => {
+  const handleFormatTime = (date: Date) => {
     const hours = date.getHours().toString().padStart(2, "0");
     const minutes = date.getMinutes().toString().padStart(2, "0");
     return `${hours}:${minutes}`;

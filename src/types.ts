@@ -5,3 +5,10 @@ export type Users = {
   bio: string;
   avatar: string;
 };
+
+export type ChatMessage = {
+  id?: string;
+  uid: string;
+  text: string;
+  createdAt: { seconds: number; nanoseconds: number };
+};

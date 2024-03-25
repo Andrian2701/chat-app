@@ -1,0 +1,48 @@
+@use "../../abstracts/index.scss" as *;
+
+.chat-top-bar {
+  height: 3.5rem;
+  width: 65%;
+  position: fixed;
+  padding: 0.5rem 0.9rem 0.5rem 0.9rem;
+  background-color: $color-white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  z-index: 2;
+  border-bottom: 1px solid $color-grey-hover;
+
+  @media (max-width: 764px) {
+    width: 100%;
+  }
+
+  .flex-left {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+
+    .go-back {
+      @include grey-icon;
+
+      @media (min-width: 764px) {
+        display: none;
+      }
+    }
+
+    p {
+      font-size: 1rem;
+      font-weight: 500;
+    }
+  }
+
+  .flex-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    svg {
+      @include grey-icon;
+    }
+  }
+}

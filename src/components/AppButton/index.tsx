@@ -1,11 +1,11 @@
 import "@/styles/components/index.scss";
 
-type AppButtonProps = {
+type Props = {
   label: string;
   onClick?: () => void;
 };
 
-export const AppButton = ({ label, onClick }: AppButtonProps) => {
+export const AppButton = ({ label, onClick }: Props) => {
   return (
     <button type="submit" className="app-btn" onClick={onClick}>
       {label}

@@ -1,19 +1,20 @@
 "use client";
-import { useEffect, useState, useMemo, useContext } from "react";
+import { useMemo, useContext } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSearchParams, usePathname } from "next/navigation";
+import { RiArrowLeftLine } from "react-icons/ri";
 import { doc, updateDoc } from "firebase/firestore";
-import { updateProfile, onAuthStateChanged } from "firebase/auth";
+import { updateProfile } from "firebase/auth";
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import { ModalTop } from "../ModalTop";
-import { AppButton, SetAvatar, ModalBack } from "..";
+import { AppButton, SetAvatar, ModalOverlay } from "..";
 import { ProfileBar } from "../ProfileBar";
 import { StyledTextField } from "@/components";
-import { auth, db } from "@/utils/firebase";
 import { AuthContext } from "@/context/AuthContext";
 import { UsersContext } from "@/context/UsersContext";
+import { db } from "@/utils/firebase";
 import "@/styles/components/index.scss";
 
 type FormValues = {
@@ -21,7 +22,7 @@ type FormValues = {
   bio: string;
 };
 
-export const Profile = () => {
+export const AuthProfile = () => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const profileModal = searchParams.get("profileModal");
@@ -52,18 +53,19 @@ export const Profile = () => {
     bio: Yup.string().min(4, "Required min 4").max(100, "Required max 100"),
   });
 
-  console.log("current", currentUser);
-  console.log("users", users);
-  console.log("test", user);
-
   return (
     <>
       {profileModal && (
         <>
-          <ModalBack />
-          <div className="profile-modal">
-            <ModalTop pathname={pathname} label="Profile" />
-            <ProfileBar className="profile-menu-modal">
+          <ModalOverlay />
+          <div className="auth-profile">
+            <div className="flex-top">
+              <Link href={pathname}>
+                <RiArrowLeftLine />
+              </Link>
+              <h1>Profile</h1>
+            </div>
+            <ProfileBar className="auth-profile-menu">
               <SetAvatar />
             </ProfileBar>
             <Formik
@@ -75,9 +77,10 @@ export const Profile = () => {
                   name: values.name,
                   bio: values.bio,
                 });
-                updateProfile(auth.currentUser, {
+                updateProfile(currentUser, {
                   displayName: values.name,
                 });
+
                 setSubmitting(false);
                 router.push(pathname);
               }}
@@ -99,13 +102,13 @@ export const Profile = () => {
                     variant="outlined"
                     name="bio"
                     label="Bio"
+                    rows={5}
+                    multiline
                     value={values.bio}
                     onChange={handleChange}
                     onKeyDown={(e) => {
                       e.key === "Enter" && e.preventDefault();
                     }}
-                    rows={5}
-                    multiline
                   />
                   <ErrorMessage name="bio" className="error" component="div" />
                   <AppButton label="Save" />

@@ -9,11 +9,11 @@ import { auth, provider, db } from "@/utils/firebase";
 import googleIcon from "@/assets/google.png";
 import "@/styles/components/index.scss";
 
-type GoogleButtonProps = {
+type Props = {
   label: string;
 };
 
-export const GoogleAuth = ({ label }: GoogleButtonProps) => {
+export const GoogleAuth = ({ label }: Props) => {
   const router = useRouter();
 
   const handleAuthWithGoogle = () => {

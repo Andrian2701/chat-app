@@ -7,17 +7,13 @@ import { AuthContext } from "@/context/AuthContext";
 import { UsersContext } from "@/context/UsersContext";
 import "@/styles/components/index.scss";
 
-type ProfileMenuProps = {
+type Props = {
   className: string;
   children?: any;
   onClick?: any;
 };
 
-export const ProfileBar = ({
-  className,
-  children,
-  onClick,
-}: ProfileMenuProps) => {
+export const ProfileBar = ({ className, children, onClick }: Props) => {
   const { currentUser } = useContext(AuthContext);
   const { users, loading } = useContext(UsersContext);
 

@@ -1,6 +1,6 @@
 @use "../../abstracts/index.scss" as *;
 
-.profile-modal {
+.auth-profile {
   @include form;
   z-index: 10000;
 
@@ -11,6 +11,10 @@
   input {
     padding: 0.8rem 1rem 0.8rem 1rem;
     border: none;
+  }
+
+  .flex-top {
+    @include modal-top;
   }
 
   .edit-profile-form {

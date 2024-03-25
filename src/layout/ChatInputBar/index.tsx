@@ -1,24 +1,31 @@
 "use client";
 import { useState, useContext } from "react";
 import { doc, updateDoc, arrayUnion, Timestamp } from "firebase/firestore";
+import { v4 as uuidv4 } from "uuid";
 import { PiImage } from "react-icons/pi";
 import { GoSmiley } from "react-icons/go";
 import { IoSendSharp } from "react-icons/io5";
+import { VscMic } from "react-icons/vsc";
 
 import { ChatContext } from "@/context/ChatContext";
 import { AuthContext } from "@/context/AuthContext";
 import { db } from "@/utils/firebase";
-import "@/styles/components/index.scss";
+import "@/styles/layout/index.scss";
 
-export const ChatInputBar = ({ scroll }: any) => {
-  const [message, setMessage] = useState<string>("");
-  const { chat }: any = useContext(ChatContext);
+type Props = {
+  scroll: React.RefObject<HTMLDivElement>;
+};
+
+export const ChatInputBar = ({ scroll }: Props) => {
   const { currentUser } = useContext(AuthContext);
+  const { chat }: any = useContext(ChatContext);
+  const [message, setMessage] = useState<string>("");
 
   const handleSendMessage = async () => {
     if (message.trim() !== "") {
       await updateDoc(doc(db, "chats", chat.chatId), {
         messages: arrayUnion({
+          id: uuidv4(),
           uid: currentUser.uid,
           text: message,
           createdAt: Timestamp.now(),
@@ -27,7 +34,10 @@ export const ChatInputBar = ({ scroll }: any) => {
     }
 
     setMessage("");
-    scroll.current.scrollIntoView({ behavior: "smooth" });
+
+    if (scroll.current !== null) {
+      scroll.current.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   const handleSendOnKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -49,10 +59,12 @@ export const ChatInputBar = ({ scroll }: any) => {
         />
       </div>
       <div className="flex-right">
-        {message && (
-          <IoSendSharp className="send-icon" onClick={handleSendMessage} />
-        )}
         <GoSmiley />
+        {message ? (
+          <IoSendSharp className="send-icon" onClick={handleSendMessage} />
+        ) : (
+          <VscMic />
+        )}
       </div>
     </div>
   );

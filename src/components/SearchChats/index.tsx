@@ -5,7 +5,7 @@ import { useState } from "react";
 import "@/styles/components/index.scss";
 
 type SearchChatsProps = {
-  onChangeCallback: any;
+  onChangeCallback: (searchTerm: string) => void;
 };
 
 export const SearchChats = ({ onChangeCallback }: SearchChatsProps) => {
@@ -21,10 +21,10 @@ export const SearchChats = ({ onChangeCallback }: SearchChatsProps) => {
   return (
     <input
       type="text"
-      value={value}
-      onChange={handleChange}
       placeholder="Search"
       className="search-chats-input"
+      value={value}
+      onChange={handleChange}
     />
   );
 };

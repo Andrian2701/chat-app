@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo, useContext } from "react";
 
-import { Chats, Hamburger, SearchChats } from "@/components";
+import { ChatList, Hamburger, SearchChats } from "@/components";
 import { UsersContext } from "@/context/UsersContext";
 import { AuthContext } from "@/context/AuthContext";
 import "@/styles/layout/index.scss";
@@ -41,8 +41,6 @@ export const SideBar = () => {
     setFilteredUsers(filteredItems);
   };
 
-  console.log(users);
-
   return (
     <div className="side-bar">
       <div className="side-bar-top">
@@ -50,7 +48,7 @@ export const SideBar = () => {
         <SearchChats onChangeCallback={handleFilterUsers} />
       </div>
       <div className="side-bar-bottom">
-        <Chats users={filteredUsers} loading={loading} />
+        <ChatList users={filteredUsers} loading={loading} />
       </div>
     </div>
   );

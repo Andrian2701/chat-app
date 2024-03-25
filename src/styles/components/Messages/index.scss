@@ -1,0 +1,62 @@
+@use "../../abstracts/variables" as *;
+
+.sender-m {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  p {
+    height: 100%;
+    padding: 0.4rem 1rem 0.4rem 1rem;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+    background-color: $color-blue;
+    color: $color-white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+
+    .m-text {
+      font-size: 1rem;
+      word-wrap: break-word;
+      max-width: 8rem;
+
+      @media (min-width: 280px) {
+        max-width: 12rem;
+      }
+
+      @media (min-width: 500px) {
+        max-width: 20rem;
+      }
+
+      @media (min-width: 992px) {
+        max-width: 25rem;
+      }
+    }
+
+    .m-date {
+      height: 100%;
+      display: flex;
+      align-items: flex-end;
+
+      div {
+        font-size: 0.9rem;
+        margin-top: 0.4rem;
+      }
+    }
+  }
+}
+
+.m {
+  @extend .sender-m;
+  justify-content: flex-start;
+
+  p {
+    border-bottom-left-radius: 0rem;
+    border-bottom-right-radius: 1rem;
+    color: $color-black;
+    background-color: $color-grey-hover;
+  }
+}

@@ -5,8 +5,8 @@ import { Divider, Drawer } from "@mui/material";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoLogOutOutline } from "react-icons/io5";
 
-import { ProfileBar } from "../ProfileBar";
-import { NavBar } from "../NavBar";
+import { ProfileBar } from "@/components";
+import { NavBar } from "@/components";
 import "@/styles/components/index.scss";
 
 export const Hamburger = () => {
@@ -17,14 +17,14 @@ export const Hamburger = () => {
   };
 
   return (
-    <div>
+    <>
       <RxHamburgerMenu
         className="hamburger-icon"
         onClick={toggleDrawer(true)}
       />
       <Drawer open={open} onClose={toggleDrawer(false)}>
-        <div className="top">
-          <ProfileBar className="profile-menu" onClick={toggleDrawer(false)} />
+        <div className="flex-top">
+          <ProfileBar className="profile-bar" onClick={toggleDrawer(false)} />
           <Link
             href="?logOutModal=true"
             className="log-out"
@@ -34,10 +34,10 @@ export const Hamburger = () => {
           </Link>
         </div>
         <Divider />
-        <div className="bottom">
+        <div className="flex-bottom">
           <NavBar />
         </div>
       </Drawer>
-    </div>
+    </>
   );
 };

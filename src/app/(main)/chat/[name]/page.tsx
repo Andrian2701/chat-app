@@ -1,17 +1,18 @@
 "use client";
 import { useRef } from "react";
 
-import { ChatInputBar, ChatTopBar, ChatMessages } from "@/components";
+import { ChatMessages } from "@/components";
+import { ChatTopBar, ChatInputBar } from "@/layout";
 import "@/styles/pages/index.scss";
 
-type ChatPageProps = {
+type Props = {
   params: {
     name: string;
   };
 };
 
-const ChatPage = ({ params: { name } }: ChatPageProps) => {
-  const scroll = useRef<HTMLDivElement | null>(null);
+const ChatPage = ({ params: { name } }: Props) => {
+  const scroll = useRef<HTMLDivElement>(null);
 
   return (
     <div className="chat-page">

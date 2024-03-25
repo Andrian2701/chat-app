@@ -6,11 +6,11 @@ import { updateProfile } from "firebase/auth";
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import { SnackBar, AppButton } from "@/components/index";
+import { SnackBar, AppButton } from "@/components";
 import { StyledTextField } from "../SignUp";
-import { auth, db } from "@/utils/firebase";
-import "@/styles/components/index.scss";
 import { AuthContext } from "@/context/AuthContext";
+import { db } from "@/utils/firebase";
+import "@/styles/components/index.scss";
 
 type FormValues = {
   name: string;
@@ -45,9 +45,10 @@ export const SetupProfile = () => {
           name: values.name,
           bio: values.bio,
         });
-        updateProfile(auth.currentUser, {
+        updateProfile(currentUser, {
           displayName: values.name,
         });
+
         setAlertLabel("Redirect...");
         setTimeout(() => router.push("/"), 2000);
         setSubmitting(false);
