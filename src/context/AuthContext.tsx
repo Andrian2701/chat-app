@@ -18,8 +18,6 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     return () => unsub();
   }, []);
 
-  console.log(currentUser);
-
   return (
     <AuthContext.Provider value={{ currentUser }}>
       {children}

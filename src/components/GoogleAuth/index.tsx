@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { getRedirectResult, signInWithRedirect } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 
 import { auth, provider, db } from "@/utils/firebase";
 import googleIcon from "@/assets/google.png";
@@ -16,22 +16,30 @@ type Props = {
 export const GoogleAuth = ({ label }: Props) => {
   const router = useRouter();
 
-  const handleAuthWithGoogle = () => {
-    signInWithRedirect(auth, provider);
-  };
+  const handleAuthWithGoogle = () => signInWithRedirect(auth, provider);
 
   useEffect(() => {
-    getRedirectResult(auth).then((result) => {
-      const user = result?.user;
+    const handleRedirect = async () => {
+      const res = await getRedirectResult(auth);
+      const user = res?.user;
+      if (!user) return;
 
-      setDoc(doc(db, "users", user?.uid), {
-        uid: user?.uid,
-        name: user?.displayName,
-        email: user?.email,
-      });
-      router.push("/setup-profile");
-    });
-  }, []);
+      const userData = await getDoc(doc(db, "users", user.uid));
+
+      if (!userData.exists()) {
+        await setDoc(doc(db, "users", user.uid), {
+          uid: user.uid,
+          name: user.displayName,
+          email: user.email,
+        });
+        router.push("/setup-profile");
+      } else {
+        router.push("/");
+      }
+    };
+
+    handleRedirect();
+  }, [router]);
 
   return (
     <button
