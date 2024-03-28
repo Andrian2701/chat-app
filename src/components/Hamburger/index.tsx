@@ -35,7 +35,7 @@ export const Hamburger = () => {
         </div>
         <Divider />
         <div className="flex-bottom">
-          <NavBar />
+          <NavBar onClick={toggleDrawer(false)} />
         </div>
       </Drawer>
     </>

@@ -34,12 +34,13 @@ export const GoogleAuth = ({ label }: Props) => {
           name: user.displayName,
           email: user.email,
         });
+        await setDoc(doc(db, "userChats", user.uid), {});
 
         router.push("/setup-profile");
       } else {
         dispatch({
           type: SET_ALERT,
-          payload: "Successfull Authentification.",
+          payload: "Successfull authentification.",
         });
         setTimeout(() => {
           dispatch({

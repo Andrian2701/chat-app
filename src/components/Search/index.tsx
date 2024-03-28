@@ -8,7 +8,7 @@ type SearchChatsProps = {
   onChangeCallback: (searchTerm: string) => void;
 };
 
-export const SearchChats = ({ onChangeCallback }: SearchChatsProps) => {
+export const Search = ({ onChangeCallback }: SearchChatsProps) => {
   const [value, setValue] = useState<string>("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,7 +22,7 @@ export const SearchChats = ({ onChangeCallback }: SearchChatsProps) => {
     <input
       type="text"
       placeholder="Search"
-      className="search-chats-input"
+      className="search"
       value={value}
       onChange={handleChange}
     />

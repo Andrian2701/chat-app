@@ -30,7 +30,7 @@ export const LogOut = () => {
               <Link href={pathname}>
                 <RiArrowLeftLine />
               </Link>
-              <h1>Log out</h1>
+              <h1>Log out of Evertalk</h1>
             </div>
             <p>
               Logging out now will end your current session. You can always log

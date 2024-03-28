@@ -61,6 +61,7 @@ export const SignUp = () => {
             name: userCredential.user.displayName,
             email: userCredential.user.email,
           });
+          // setDoc(doc(db, "userChats", userCredential.user.uid), {});
 
           router.push("/setup-profile");
         });
@@ -71,7 +72,7 @@ export const SignUp = () => {
       {({ values, handleSubmit, handleChange }) => {
         return (
           <Form className="sign-up" onSubmit={handleSubmit}>
-            <h1>Sign up to SyncTalk</h1>
+            <h1>Sign up to Evertalk</h1>
             <GoogleAuth label="Sign up" />
             <Divider className="divider">or</Divider>
             <div className="input-container">

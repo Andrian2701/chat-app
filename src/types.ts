@@ -1,8 +1,8 @@
 export type Users = {
   uid: string;
-  email: string;
+  email?: string;
   name: string;
-  bio: string;
+  bio?: string;
   avatar: string;
 };
 

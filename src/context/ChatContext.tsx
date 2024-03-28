@@ -1,12 +1,12 @@
 "use client";
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useReducer, ReactNode } from "react";
 
 import { AuthContext } from "./AuthContext";
 
 export const ChatContext = createContext<any>(null);
-const CHANGE_USER = "CHANGE_USER";
+export const CHANGE_USER = "CHANGE_USER";
 
-export const ChatContextProvider = ({ children }: any) => {
+export const ChatContextProvider = ({ children }: { children: ReactNode }) => {
   const { currentUser } = useContext(AuthContext);
   const INITIAL_STATE = {
     chatId: "null",

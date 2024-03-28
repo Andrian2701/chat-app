@@ -1,6 +1,6 @@
 @use "../../abstracts/variables" as *;
 
-.chat-list {
+.chats {
   height: 100vh;
   padding-top: 3.7rem;
   overflow: hidden;
@@ -56,4 +56,12 @@
       }
     }
   }
+}
+
+.users {
+  @extend .chats;
+  height: 100%;
+  padding-top: 0.5rem;
+  overflow: hidden;
+  overflow-y: scroll;
 }

@@ -1,54 +1,22 @@
 "use client";
 
-import { useState, useEffect, useMemo, useContext } from "react";
-
-import { ChatList, Hamburger, SearchChats } from "@/components";
-import { UsersContext } from "@/context/UsersContext";
-import { AuthContext } from "@/context/AuthContext";
+import { ChatList, Hamburger, Search } from "@/components";
+import { useGetUserChats } from "@/hooks/useGetUserChats";
+import { useFilterListData } from "@/hooks/useFilterListData";
 import "@/styles/layout/index.scss";
 
-export type Users = {
-  bio: string;
-  email: string;
-  name: string;
-  uid: string;
-  avatar: string;
-};
-
 export const SideBar = () => {
-  const { users, loading } = useContext(UsersContext);
-  const { currentUser } = useContext(AuthContext);
-  const [filteredUsers, setFilteredUsers] = useState<Users[] | undefined>([]);
-
-  const currentUserData = useMemo(() => {
-    return currentUser
-      ? users?.filter((user) => user.uid !== currentUser.uid)
-      : null;
-  }, [users, currentUser]);
-
-  useEffect(() => {
-    if (currentUserData !== null && currentUserData !== undefined) {
-      Object.keys(currentUserData).length > 0 &&
-        setFilteredUsers(currentUserData);
-    }
-  }, [currentUserData]);
-
-  const handleFilterUsers = (searchTerm: string) => {
-    const filteredItems: Users[] | undefined = currentUserData?.filter((user) =>
-      user.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-
-    setFilteredUsers(filteredItems);
-  };
+  const { userChats, loading } = useGetUserChats();
+  const { filteredList, handleFilterList } = useFilterListData(userChats);
 
   return (
     <div className="side-bar">
-      <div className="side-bar-top">
+      <div className="top">
         <Hamburger />
-        <SearchChats onChangeCallback={handleFilterUsers} />
+        <Search onChangeCallback={handleFilterList} />
       </div>
-      <div className="side-bar-bottom">
-        <ChatList users={filteredUsers} loading={loading} />
+      <div className="bottom">
+        <ChatList chats={filteredList} loading={loading} />
       </div>
     </div>
   );

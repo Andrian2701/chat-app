@@ -44,7 +44,7 @@ export const SignIn = () => {
           .then(() => {
             dispatch({
               type: SET_ALERT,
-              payload: "Successfull Authentification.",
+              payload: "Successfull authentification.",
             });
             setTimeout(() => {
               dispatch({ type: "SET_ALERT", payload: null });
@@ -65,7 +65,7 @@ export const SignIn = () => {
         return (
           <>
             <Form className="sign-in" onSubmit={handleSubmit}>
-              <h1>Sign in to SyncTalk</h1>
+              <h1>Sign in to Evertalk</h1>
               <GoogleAuth label="Sign in" />
               <Divider className="divider">or</Divider>
               <div className="input-container">
