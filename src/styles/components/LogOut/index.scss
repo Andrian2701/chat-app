@@ -1,6 +1,6 @@
 @use "../../abstracts/index.scss" as *;
 
-.log-out-modal {
+.log-out {
   @include form;
   z-index: 10000;
 
@@ -12,7 +12,22 @@
     color: $color-grey;
   }
 
-  .modal-top {
+  .log-out-top {
     @include modal-top;
+  }
+
+  .btns {
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+      color: $color-blue;
+      transition-duration: 0.2s;
+      text-transform: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 0.5rem 1rem 0.5em 1rem;
+      border-radius: 0.5rem;
+    }
   }
 }

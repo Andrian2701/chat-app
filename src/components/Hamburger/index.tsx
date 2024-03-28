@@ -27,7 +27,7 @@ export const Hamburger = () => {
           <ProfileBar className="profile-bar" onClick={toggleDrawer(false)} />
           <Link
             href="?logOutModal=true"
-            className="log-out"
+            className="log-out-icon"
             onClick={toggleDrawer(false)}
           >
             <IoLogOutOutline />
