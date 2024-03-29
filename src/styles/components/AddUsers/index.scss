@@ -4,6 +4,7 @@
   @include form;
   z-index: 10000;
   height: 600px;
+  padding: 1.5rem 1.5rem 1.5rem 1.5rem;
 
   @media (max-width: 500px) {
     @include mobile-form;
@@ -13,11 +14,25 @@
     @include modal-top;
   }
 
+  .btns {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 3rem;
+    bottom: 0;
+    border-top: 1px solid $color-grey-hover;
+    z-index: 2;
+    background-color: $color-white;
+  }
+
   .flex-bottom {
-    height: 80%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
     .side-bar-top {
-      height: 3.5rem;
+      height: 3rem;
       width: 100%;
       background-color: $color-white;
       display: flex;
@@ -25,6 +40,12 @@
       justify-content: space-between;
       gap: 1rem;
       z-index: 2;
+      border-bottom: 1px solid $color-grey-hover;
+
+      .search-icon {
+        font-size: 1.5rem;
+        color: #b5b5b5;
+      }
 
       input {
         height: 37.69px;

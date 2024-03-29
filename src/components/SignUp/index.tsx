@@ -7,7 +7,7 @@ import { styled, Divider, TextField } from "@mui/material";
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import { AppButton, GoogleAuth } from "@/components/index";
+import { GoogleAuth, FormButton } from "@/components/index";
 import { auth, db } from "@/utils/firebase";
 import "@/styles/components/index.scss";
 
@@ -61,9 +61,8 @@ export const SignUp = () => {
             name: userCredential.user.displayName,
             email: userCredential.user.email,
           });
-          // setDoc(doc(db, "userChats", userCredential.user.uid), {});
 
-          router.push("/setup-profile");
+          router.push("/profile-setup");
         });
 
         setSubmitting(false);
@@ -96,7 +95,7 @@ export const SignUp = () => {
               <ErrorMessage name="password" component="div" className="error" />
             </div>
             <div className="nav">
-              <AppButton label="Next" />
+              <FormButton label="Next" />
               <div className="to-sign-in">
                 Have an account?
                 <Link href="/sign-in">Sign in</Link>

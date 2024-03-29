@@ -7,7 +7,7 @@ import { Divider } from "@mui/material";
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import { AppButton, GoogleAuth, Alert } from "@/components";
+import { GoogleAuth, Alert, FormButton } from "@/components";
 import { AlertContext, SET_ALERT } from "@/context/AlertContext";
 import { StyledTextField } from "../SignUp";
 import { auth } from "@/utils/firebase";
@@ -93,7 +93,7 @@ export const SignIn = () => {
                 />
               </div>
               <div className="nav">
-                <AppButton label="Sign in" />
+                <FormButton label="Sign in" />
                 <div className="to-sign-in">
                   Don't have an account?
                   <Link href="/sign-up">Sign up</Link>

@@ -1,12 +1,12 @@
 @use "../../abstracts/variables" as *;
 
-.app-btn {
+.form-btn {
   width: 100%;
   padding: 0.7rem 1rem 0.7em 1rem;
-  border-radius: 0.7rem;
-  border: 1px solid $color-black;
+  border-radius: 999rem;
+  border: 1px solid $color-blue;
   color: $color-white;
-  background-color: $color-black;
+  background-color: $color-blue;
   text-decoration: none;
   text-align: center;
   font-size: 0.9rem;
@@ -14,6 +14,7 @@
   cursor: pointer;
 
   &:hover {
-    background-color: $color-black-hover;
+    background-color: rgb(27, 145, 223);
+    border: 1px solid $color-blue;
   }
 }

@@ -13,6 +13,10 @@
   height: 2.2rem;
   cursor: pointer;
 
+  @media (max-width: 500px) {
+    left: 54%;
+  }
+
   .set-icon {
     font-size: 1.4rem;
     color: $color-white;

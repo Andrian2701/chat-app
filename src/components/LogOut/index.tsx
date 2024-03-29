@@ -3,9 +3,8 @@ import { useRouter } from "next/navigation";
 import { useSearchParams, usePathname } from "next/navigation";
 import { signOut } from "firebase/auth";
 import { Button } from "@mui/material";
-import { RiArrowLeftLine } from "react-icons/ri";
 
-import { ModalOverlay } from "@/components";
+import { MainButton, ModalOverlay } from "@/components";
 import { auth } from "@/utils/firebase";
 import "@/styles/components/index.scss";
 
@@ -33,11 +32,9 @@ export const LogOut = () => {
             <p>Are you sure you want to LOG OUT of Evertalk app?</p>
             <div className="btns">
               <Link href={pathname}>
-                <Button disableRipple>Cancel</Button>
+                <MainButton label="Cancel" />
               </Link>
-              <Button onClick={handleLogOut} disableRipple>
-                Log out
-              </Button>
+              <MainButton label="Log out" onClick={handleLogOut} />
             </div>
           </div>
         </>

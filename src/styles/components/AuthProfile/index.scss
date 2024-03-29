@@ -2,15 +2,11 @@
 
 .auth-profile {
   @include form;
+  padding: 1.5rem 1.5rem 1.5rem 1.5rem;
   z-index: 10000;
 
   @media (max-width: 500px) {
     @include mobile-form;
-  }
-
-  input {
-    padding: 0.8rem 1rem 0.8rem 1rem;
-    border: none;
   }
 
   .flex-top {
@@ -23,11 +19,35 @@
     gap: 1rem;
 
     input {
-      padding: 16.5px 14px;
+      padding: 0.5rem 0rem;
     }
 
     .error {
       @include form-err-message;
+    }
+
+    .text {
+      padding: 1rem 1rem 1rem 1rem;
+      width: 100%;
+      height: 4rem;
+      font-size: 0.9rem;
+      background-color: $color-grey-hover;
+      color: $color-grey;
+    }
+
+    .btns {
+      display: flex;
+      justify-content: flex-end;
+
+      button {
+        color: $color-blue;
+        transition-duration: 0.2s;
+        text-transform: none;
+        font-size: 0.9rem;
+        font-weight: 600;
+        padding: 0.5rem 1rem 0.5em 1rem;
+        border-radius: 0.5rem;
+      }
     }
   }
 }

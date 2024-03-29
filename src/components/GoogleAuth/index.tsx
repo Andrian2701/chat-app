@@ -36,7 +36,7 @@ export const GoogleAuth = ({ label }: Props) => {
         });
         await setDoc(doc(db, "userChats", user.uid), {});
 
-        router.push("/setup-profile");
+        router.push("/profile-setup");
       } else {
         dispatch({
           type: SET_ALERT,

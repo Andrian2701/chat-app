@@ -4,6 +4,8 @@
 .sign-in,
 .setup-profile {
   @include form;
+  width: 500px;
+  box-shadow: none;
 
   @media (max-width: 500px) {
     @include mobile-form;

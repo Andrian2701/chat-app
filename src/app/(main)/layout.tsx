@@ -1,17 +1,17 @@
 "use client";
 
-import { LogOut, AuthProfile, AddChats } from "@/components";
+import { LogOut, CurrentProfile, AddChat } from "@/components";
 import { SideBar } from "@/layout";
 import { withAuth } from "@/utils/withAuth";
-import "@/styles/index.scss";
+import "@/styles/base/index.scss";
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="main">
+    <div className="main-layout">
       <SideBar />
       <LogOut />
-      <AuthProfile />
-      <AddChats />
+      <CurrentProfile />
+      <AddChat />
       {children}
     </div>
   );

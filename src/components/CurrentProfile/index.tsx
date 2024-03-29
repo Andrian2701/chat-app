@@ -9,9 +9,13 @@ import { updateProfile } from "firebase/auth";
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import { AppButton, SetAvatar, ModalOverlay } from "..";
-import { ProfileBar } from "../ProfileBar";
-import { StyledTextField } from "@/components";
+import {
+  StyledTextField,
+  SetAvatar,
+  ModalOverlay,
+  ProfileBar,
+  MainButton,
+} from "@/components";
 import { AuthContext } from "@/context/AuthContext";
 import { UsersContext } from "@/context/UsersContext";
 import { db } from "@/utils/firebase";
@@ -22,7 +26,7 @@ type FormValues = {
   bio: string;
 };
 
-export const AuthProfile = () => {
+export const CurrentProfile = () => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const profileModal = searchParams.get("profileModal");
@@ -88,7 +92,30 @@ export const AuthProfile = () => {
               {({ values, handleSubmit, handleChange }) => (
                 <Form className="edit-profile-form" onSubmit={handleSubmit}>
                   <StyledTextField
-                    variant="outlined"
+                    variant="standard"
+                    name="bio"
+                    label="Bio"
+                    multiline
+                    value={values.bio}
+                    onChange={handleChange}
+                    onKeyDown={(e) => {
+                      e.key === "Enter" && e.preventDefault();
+                    }}
+                    sx={{
+                      "& .MuiInput-root": {
+                        "&:after": {
+                          borderColor: "rgb(29, 155, 240)",
+                        },
+                      },
+                    }}
+                  />
+                  <ErrorMessage name="bio" className="error" component="div" />
+                  <div className="text">
+                    Any details such as age, job. <br></br>Example: 25 y.o.
+                    florist from Norway
+                  </div>
+                  <StyledTextField
+                    variant="standard"
                     name="name"
                     label="Name"
                     value={values.name}
@@ -96,22 +123,24 @@ export const AuthProfile = () => {
                     onKeyDown={(e) => {
                       e.key === "Enter" && e.preventDefault();
                     }}
-                  />
-                  <ErrorMessage name="name" className="error" component="div" />
-                  <StyledTextField
-                    variant="outlined"
-                    name="bio"
-                    label="Bio"
-                    rows={5}
-                    multiline
-                    value={values.bio}
-                    onChange={handleChange}
-                    onKeyDown={(e) => {
-                      e.key === "Enter" && e.preventDefault();
+                    sx={{
+                      "& .MuiInput-root": {
+                        "&:after": {
+                          borderColor: "rgb(29, 155, 240)",
+                        },
+                      },
                     }}
                   />
-                  <ErrorMessage name="bio" className="error" component="div" />
-                  <AppButton label="Save" />
+                  <ErrorMessage name="name" className="error" component="div" />
+                  <div className="text">
+                    Name lets people find or contact you on Evertalk easier.
+                  </div>
+                  <div className="btns">
+                    <Link href={pathname}>
+                      <MainButton label="Close" />
+                    </Link>
+                    <MainButton label="Save" />
+                  </div>
                 </Form>
               )}
             </Formik>

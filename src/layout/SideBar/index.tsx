@@ -13,7 +13,7 @@ export const SideBar = () => {
     <div className="side-bar">
       <div className="top">
         <Hamburger />
-        <Search onChangeCallback={handleFilterList} />
+        <Search className="search-chats" onChangeCallback={handleFilterList} />
       </div>
       <div className="bottom">
         <ChatList chats={filteredList} loading={loading} />

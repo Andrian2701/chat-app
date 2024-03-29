@@ -6,7 +6,7 @@ import { updateProfile } from "firebase/auth";
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import { Alert, AppButton } from "@/components";
+import { Alert, FormButton } from "@/components";
 import { StyledTextField } from "../SignUp";
 import { AuthContext } from "@/context/AuthContext";
 import { AlertContext, SET_ALERT } from "@/context/AlertContext";
@@ -18,7 +18,7 @@ type FormValues = {
   bio: string;
 };
 
-export const SetupProfile = () => {
+export const ProfileSetup = () => {
   const { currentUser } = useContext(AuthContext);
   const { dispatch } = useContext(AlertContext);
   const router = useRouter();
@@ -92,7 +92,7 @@ export const SetupProfile = () => {
                 <ErrorMessage name="bio" component="div" className="error" />
               </div>
               <div className="nav">
-                <AppButton label="Start" />
+                <FormButton label="Start" />
               </div>
             </Form>
             <Alert />

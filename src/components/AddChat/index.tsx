@@ -3,14 +3,15 @@ import Link from "next/link";
 import { useContext, useEffect, useMemo } from "react";
 import { useSearchParams, usePathname } from "next/navigation";
 import { RiArrowLeftLine } from "react-icons/ri";
+import { LiaSearchSolid } from "react-icons/lia";
 
-import { ModalOverlay, Search, UserList } from "@/components";
+import { MainButton, ModalOverlay, Search, UserList } from "@/components";
 import { AuthContext } from "@/context/AuthContext";
 import { UsersContext } from "@/context/UsersContext";
 import { useFilterListData } from "@/hooks/useFilterListData";
 import "@/styles/components/index.scss";
 
-export const AddChats = () => {
+export const AddChat = () => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const addChats = searchParams.get("addChats");
@@ -44,9 +45,20 @@ export const AddChats = () => {
             </div>
             <div className="flex-bottom">
               <div className="side-bar-top">
-                <Search onChangeCallback={handleFilterList} />
+                <Search
+                  className="search-users"
+                  onChangeCallback={handleFilterList}
+                >
+                  <LiaSearchSolid className="search-icon" />
+                </Search>
               </div>
               <UserList users={filteredList} loading={loading} />
+              <div className="btns">
+                <MainButton label="Add chat" />
+                <Link href={pathname}>
+                  <MainButton label="Close" />
+                </Link>
+              </div>
             </div>
           </div>
         </>
