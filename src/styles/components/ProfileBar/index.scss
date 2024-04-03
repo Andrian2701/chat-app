@@ -24,12 +24,29 @@
 
 .auth-profile-menu {
   @extend .profile-bar;
-  position: relative;
 
   a {
     .avatar {
       width: 6rem;
       height: 6rem;
+      font-size: 2rem;
+    }
+  }
+
+  p {
+    font-size: 1.2rem;
+  }
+}
+
+.user-profile-menu {
+  @extend .profile-bar;
+  display: flex;
+  flex-direction: row;
+
+  a {
+    .avatar {
+      width: 4.6rem;
+      height: 4.6rem;
       font-size: 2rem;
     }
   }

@@ -20,7 +20,7 @@ export const useGetUserChats = () => {
 
       return () => unSub();
     }
-  }, [currentUser?.uid]);
+  }, [currentUser]);
 
   return { userChats, loading };
 };

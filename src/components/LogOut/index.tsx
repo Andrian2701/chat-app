@@ -26,9 +26,6 @@ export const LogOut = () => {
         <>
           <ModalOverlay />
           <div className="log-out">
-            <div className="log-out-top">
-              <h1>Log out</h1>
-            </div>
             <p>Are you sure you want to LOG OUT of Evertalk app?</p>
             <div className="btns">
               <Link href={pathname}>

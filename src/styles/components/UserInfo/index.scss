@@ -1,0 +1,107 @@
+@use "../../abstracts/index.scss" as *;
+
+.user-info {
+  @include form;
+  z-index: 10000;
+  gap: 0;
+
+  @media (max-width: 500px) {
+    @include mobile-form;
+  }
+
+  .flex-top {
+    @include modal-top;
+    width: 100%;
+    padding: 1rem 1.5rem 1rem 1.5rem;
+    position: fixed;
+    top: 0;
+    z-index: 2;
+    background-color: $color-white;
+
+    @media (min-width: 500px) {
+      border-top-left-radius: 0.8rem;
+      border-top-right-radius: 0.8rem;
+    }
+  }
+
+  .flex-bottom {
+    padding: 5rem 0 0 0;
+    overflow: hidden;
+    overflow-y: scroll;
+    z-index: 1;
+
+    .flex-one {
+      display: flex;
+      justify-content: flex-start;
+      padding: 0rem 1.5rem 0.8rem 1.5rem;
+    }
+
+    .big-hr {
+      @include divider;
+    }
+
+    .flex-two {
+      display: flex;
+      flex-direction: column;
+
+      .email {
+        padding: 0.8rem 1.5rem 0.8rem 1.5rem;
+        display: flex;
+        gap: 1.3rem;
+        text-decoration: none;
+        color: $color-black;
+        font-size: 1.7rem;
+
+        div {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+          text-decoration: none;
+          font-size: 1rem;
+
+          label {
+            color: $color-grey;
+          }
+        }
+      }
+
+      a {
+        margin-top: 0.3rem;
+        padding: 0.8rem 1.5rem 0.8rem 4.5rem;
+        color: $color-blue;
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 0.9rem;
+
+        &:hover {
+          background-color: $color-grey-hover;
+        }
+      }
+    }
+
+    .flex-three {
+      a {
+        padding: 0.8rem 0.8rem 0.8rem 1.5rem;
+        display: flex;
+        gap: 1.3rem;
+        text-decoration: none;
+        color: $color-black;
+        font-size: 1.4rem;
+
+        p {
+          text-decoration: none;
+          font-size: 1rem;
+        }
+
+        &:hover {
+          background-color: $color-grey-hover;
+        }
+      }
+    }
+
+    .flex-four {
+      @extend .flex-three;
+      padding: 0 0 1rem 0;
+    }
+  }
+}

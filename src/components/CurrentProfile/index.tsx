@@ -1,5 +1,5 @@
 "use client";
-import { useMemo, useContext } from "react";
+import { useContext } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSearchParams, usePathname } from "next/navigation";
@@ -17,7 +17,7 @@ import {
   MainButton,
 } from "@/components";
 import { AuthContext } from "@/context/AuthContext";
-import { UsersContext } from "@/context/UsersContext";
+import { CurrentUserContext } from "@/context/CurrentUserContext";
 import { db } from "@/utils/firebase";
 import "@/styles/components/index.scss";
 
@@ -31,14 +31,8 @@ export const CurrentProfile = () => {
   const pathname = usePathname();
   const profileModal = searchParams.get("profileModal");
   const router = useRouter();
+  const { currentUserData, loading } = useContext(CurrentUserContext);
   const { currentUser } = useContext(AuthContext);
-  const { users } = useContext(UsersContext);
-
-  const currentUserData = useMemo(() => {
-    return currentUser
-      ? users?.filter((user) => user.uid === currentUser.uid)
-      : null;
-  }, [users, currentUser]);
 
   const [user]: any = Array.isArray(currentUserData)
     ? currentUserData
@@ -69,7 +63,11 @@ export const CurrentProfile = () => {
               </Link>
               <h1>Profile</h1>
             </div>
-            <ProfileBar className="auth-profile-menu">
+            <ProfileBar
+              className="auth-profile-menu"
+              data={currentUserData}
+              loading={loading}
+            >
               <SetAvatar />
             </ProfileBar>
             <Formik

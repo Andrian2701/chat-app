@@ -1,0 +1,32 @@
+@use "../../abstracts/index.scss" as *;
+
+#chat-menu {
+  width: 15.2rem;
+
+  .MuiList-root {
+    hr {
+      border: none;
+      background-color: $color-grey-hover;
+      height: 0.5rem;
+      margin: 0.3rem 0rem 0.3rem 0rem;
+    }
+
+    a {
+      padding: 0.8rem 0.8rem 0.8rem 1.5rem;
+      display: flex;
+      gap: 1rem;
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: $color-black;
+
+      p {
+        text-decoration: none;
+        font-size: 1rem;
+      }
+
+      &:hover {
+        background-color: $color-grey-hover;
+      }
+    }
+  }
+}

@@ -14,7 +14,7 @@ import "@/styles/components/index.scss";
 export const AddChat = () => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const addChats = searchParams.get("addChats");
+  const addChats = searchParams.get("addChat");
   const { currentUser } = useContext(AuthContext);
   const { users, loading } = useContext(UsersContext);
 

@@ -19,3 +19,6 @@ export * from "./AddChat";
 export * from "./UserList";
 export * from "./LoadingSkeleton";
 export * from "./MainButton";
+export * from "./ChatAction";
+export * from "./UserInfo";
+export * from "./EditChat";

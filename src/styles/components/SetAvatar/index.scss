@@ -4,8 +4,9 @@
   background-color: $color-blue;
   border-radius: 999rem;
   position: absolute;
-  bottom: 30%;
-  left: 55%;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -17,7 +18,7 @@
     left: 54%;
   }
 
-  .set-icon {
+  svg {
     font-size: 1.4rem;
     color: $color-white;
   }

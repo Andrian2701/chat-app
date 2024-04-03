@@ -1,28 +1,27 @@
-"use client";
-import { useMemo, useContext } from "react";
+import { MouseEventHandler, ReactNode } from "react";
 import Link from "next/link";
 import { Avatar, Skeleton } from "@mui/material";
 
-import { AuthContext } from "@/context/AuthContext";
-import { UsersContext } from "@/context/UsersContext";
+import { Users } from "@/types";
 import "@/styles/components/index.scss";
 
 type Props = {
+  data: Users[] | null | undefined;
+  loading?: boolean;
+  children?: ReactNode;
+  onClick?: MouseEventHandler<HTMLAnchorElement> | undefined;
+  pathname?: string;
   className: string;
-  children?: any;
-  onClick?: any;
 };
 
-export const ProfileBar = ({ className, children, onClick }: Props) => {
-  const { currentUser } = useContext(AuthContext);
-  const { users, loading } = useContext(UsersContext);
-
-  const currentUserData = useMemo(() => {
-    return currentUser
-      ? users?.filter((user) => user.uid === currentUser.uid)
-      : null;
-  }, [users, currentUser]);
-
+export const ProfileBar = ({
+  data,
+  loading,
+  children,
+  onClick,
+  pathname = "",
+  className,
+}: Props) => {
   return (
     <div className={className}>
       {loading ? (
@@ -40,10 +39,10 @@ export const ProfileBar = ({ className, children, onClick }: Props) => {
         </>
       ) : (
         <>
-          {currentUserData?.map((user) => (
+          {data?.map((user) => (
             <>
-              <Link href="?profileModal=true" key={user.name} onClick={onClick}>
-                <Avatar className="avatar" src={user.avatar} alt="profile">
+              <Link href={pathname} key={user.name} onClick={onClick}>
+                <Avatar src={user.avatar} alt="avatar" className="avatar">
                   {user.name.charAt(0)}
                 </Avatar>
               </Link>

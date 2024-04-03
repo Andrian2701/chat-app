@@ -52,7 +52,7 @@ export const SetAvatar = () => {
 
   return (
     <label className="set-avatar">
-      <IoCameraOutline className="set-icon" />
+      <IoCameraOutline />
       <input
         type="file"
         onChange={(e) => {

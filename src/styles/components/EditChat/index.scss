@@ -1,0 +1,41 @@
+@use "../../abstracts/index.scss" as *;
+
+.edit-chat {
+  @include form;
+  z-index: 10000;
+  gap: 0;
+
+  @media (max-width: 500px) {
+    @include mobile-form;
+  }
+
+  .flex-top {
+    @include modal-top;
+    padding: 1rem 1.5rem 1rem 1.5rem;
+    position: fixed;
+    width: 100%;
+  }
+
+  .flex-bottom {
+    padding: 5rem 0 0 0;
+
+    form {
+      padding: 0.5rem 1.5rem 0.8rem 1.5rem;
+      width: 100%;
+
+      .MuiFormControl-root {
+        width: 100%;
+
+        input {
+          padding: 0.5rem 0rem;
+        }
+      }
+
+      .btns {
+        display: flex;
+        justify-content: flex-end;
+        padding: 0.8rem 0 1rem 0;
+      }
+    }
+  }
+}

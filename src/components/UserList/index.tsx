@@ -6,10 +6,10 @@ import { Avatar } from "@mui/material";
 
 import { LoadingSkeleton } from "@/components";
 import { AuthContext } from "@/context/AuthContext";
+import { CHANGE_USER, ChatContext } from "@/context/ChatContext";
 import { db } from "@/utils/firebase";
 import { Users } from "@/types";
 import "@/styles/components/index.scss";
-import { CHANGE_USER, ChatContext } from "@/context/ChatContext";
 
 type Props = {
   users: Users[] | undefined;
@@ -51,6 +51,7 @@ export const UserList = ({ users, loading }: Props) => {
     updateDoc(currentUserChatsRef, {
       chats: arrayUnion({
         uid: user.uid,
+        email: user.email,
         name: user.name,
         avatar: user.avatar ? user.avatar : "",
       }),
@@ -58,6 +59,7 @@ export const UserList = ({ users, loading }: Props) => {
     updateDoc(userChatsRef, {
       chats: arrayUnion({
         uid: currentUser.uid,
+        email: currentUser.email,
         name: currentUser.displayName,
         avatar: currentUser.photoUrl ? currentUser.photoUrl : "",
       }),

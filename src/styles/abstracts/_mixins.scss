@@ -1,6 +1,5 @@
 @mixin form {
   width: 23rem;
-  padding: 2rem 2rem 2rem 2rem;
   position: absolute;
   transform: translate(-50%, -50%);
   top: 50%;
@@ -24,9 +23,9 @@
   }
 
   h1 {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     font-weight: 700;
-    color: #050505;
+    color: #4b4747;
   }
 }
 
@@ -39,7 +38,7 @@
 @mixin form-err-message {
   font-size: 0.8rem;
   font-weight: 400;
-  color: red;
+  color: #d0312d;
 }
 
 @mixin grey-icon {
@@ -53,4 +52,11 @@
   &:hover {
     color: rgb(29, 155, 240);
   }
+}
+
+@mixin divider {
+  border: none;
+  background-color: #ededed;
+  height: 0.5rem;
+  margin: 0.3rem 0rem 0.3rem 0rem;
 }

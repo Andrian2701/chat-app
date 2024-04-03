@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { AiOutlineNotification } from "react-icons/ai";
-import { PiMoonLight } from "react-icons/pi";
 import {
   IoBookmarkOutline,
   IoPeopleOutline,
@@ -26,7 +25,7 @@ export const NavBar = ({ onClick }: Props) => {
         <AiOutlineNotification />
         <p>New Channel</p>
       </Link>
-      <Link href="?addChats=true" onClick={onClick}>
+      <Link href="?addChat=true" onClick={onClick}>
         <TbUserCircle />
         <p>People</p>
       </Link>

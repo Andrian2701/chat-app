@@ -1,23 +1,29 @@
 "use client";
+import { useContext } from "react";
 import Link from "next/link";
 import { RiArrowLeftLine } from "react-icons/ri";
 import { IoIosSearch } from "react-icons/io";
-import { HiOutlineDotsVertical } from "react-icons/hi";
 
+import { ChatMenu } from "@/components/ChatMenu";
+import { ChatContext } from "@/context/ChatContext";
 import "@/styles/layout/index.scss";
 
 export const ChatTopBar = () => {
+  const { chat } = useContext(ChatContext);
+
   return (
     <div className="chat-top-bar">
       <div className="flex-left">
         <Link href="/" className="go-back">
           <RiArrowLeftLine />
         </Link>
-        <p>Name</p>
+        <Link href="?userInfo=true">
+          <p>{chat.user.name}</p>
+        </Link>
       </div>
       <div className="flex-right">
         <IoIosSearch />
-        <HiOutlineDotsVertical />
+        <ChatMenu />
       </div>
     </div>
   );
