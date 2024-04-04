@@ -26,7 +26,7 @@ export const Hamburger = () => {
       <Drawer open={open} onClose={toggleDrawer(false)}>
         <div className="flex-top">
           <ProfileBar
-            className="profile-bar"
+            className="hamburger-profile-bar"
             onClick={toggleDrawer(false)}
             data={currentUserData}
             loading={loading}

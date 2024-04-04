@@ -39,7 +39,10 @@ export const UserInfo = () => {
             </div>
             <div className="flex-bottom">
               <div className="flex-one">
-                <ProfileBar className="user-profile-menu" data={[chat?.user]} />
+                <ProfileBar
+                  className="user-info-profile-bar"
+                  data={[chat?.user]}
+                />
               </div>
               <Divider className="big-hr" />
               <div className="flex-two">

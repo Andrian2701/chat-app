@@ -39,15 +39,15 @@ export const ProfileBar = ({
         </>
       ) : (
         <>
-          {data?.map((user) => (
+          {data?.map((item) => (
             <>
-              <Link href={pathname} key={user.name} onClick={onClick}>
-                <Avatar src={user.avatar} alt="avatar" className="avatar">
-                  {user.name.charAt(0)}
+              <Link href={pathname} key={item.name} onClick={onClick}>
+                <Avatar src={item.avatar} alt="avatar" className="avatar">
+                  {item.name.charAt(0)}
                 </Avatar>
               </Link>
               {children}
-              <p>{user.name}</p>
+              <p>{item.name}</p>
             </>
           ))}
         </>

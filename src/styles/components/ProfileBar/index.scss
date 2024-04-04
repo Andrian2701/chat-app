@@ -1,36 +1,32 @@
-@use "../../abstracts/variables" as *;
+@use "../../abstracts/index.scss" as *;
 
-.profile-bar {
+.hamburger-profile-bar {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   gap: 1rem;
+  position: relative;
 
-  a {
-    text-decoration: none;
-
-    .avatar {
-      width: 3.6rem;
-      height: 3.6rem;
-    }
+  .avatar {
+    width: 3.6rem;
+    height: 3.6rem;
+    font-size: 1.2rem;
   }
 
   p {
     font-weight: 500;
     font-size: 0.9rem;
+    color: $color-black;
   }
 }
 
-.auth-profile-menu {
-  @extend .profile-bar;
+.info-profile-bar {
+  @extend .hamburger-profile-bar;
 
-  a {
-    .avatar {
-      width: 6rem;
-      height: 6rem;
-      font-size: 2rem;
-    }
+  .avatar {
+    width: 5.6rem;
+    height: 5.6rem;
+    font-size: 1.8rem;
   }
 
   p {
@@ -38,20 +34,14 @@
   }
 }
 
-.user-profile-menu {
-  @extend .profile-bar;
+.user-info-profile-bar {
+  @extend .info-profile-bar;
   display: flex;
   flex-direction: row;
 
-  a {
-    .avatar {
-      width: 4.6rem;
-      height: 4.6rem;
-      font-size: 2rem;
-    }
-  }
-
-  p {
-    font-size: 1.2rem;
+  .avatar {
+    width: 4.6rem;
+    height: 4.6rem;
+    font-size: 1.5rem;
   }
 }

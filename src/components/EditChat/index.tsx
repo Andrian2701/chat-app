@@ -9,17 +9,19 @@ import {
   where,
   getDocs,
 } from "firebase/firestore";
-import { Form, Formik } from "formik";
+import { ErrorMessage, Form, Formik } from "formik";
 import { RiArrowLeftLine } from "react-icons/ri";
+import * as Yup from "yup";
 
 import { MainButton, ModalOverlay, StyledTextField } from "@/components";
-import { ChatContext } from "@/context/ChatContext";
+import { CHANGE_USER, ChatContext } from "@/context/ChatContext";
 import { db } from "@/utils/firebase";
 import { Users } from "@/types";
 import "@/styles/components/index.scss";
 
 export const EditChat = () => {
   const { chat } = useContext(ChatContext);
+  const { dispatch }: any = useContext(ChatContext);
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -28,6 +30,10 @@ export const EditChat = () => {
   const initialValues: { name: string } = {
     name: chat?.user.name || "",
   };
+
+  const validationSchema = Yup.object({
+    name: Yup.string().required("Name is required"),
+  });
 
   return (
     <>
@@ -44,18 +50,20 @@ export const EditChat = () => {
             <div className="flex-bottom">
               <Formik
                 initialValues={initialValues}
+                validationSchema={validationSchema}
                 enableReinitialize={true}
                 onSubmit={async (values, { setSubmitting }) => {
-                  const q = query(
-                    collection(db, "userChats"),
-                    where("chats", "array-contains", {
-                      uid: chat.user.uid,
-                      name: chat.user.name,
-                      email: chat.user.email,
-                      avatar: chat.user.avatar,
-                    })
+                  const querySnapshot = await getDocs(
+                    query(
+                      collection(db, "userChats"),
+                      where("chats", "array-contains", {
+                        uid: chat.user.uid,
+                        name: chat.user.name,
+                        email: chat.user.email,
+                        avatar: chat.user.avatar,
+                      })
+                    )
                   );
-                  const querySnapshot = await getDocs(q);
                   const doc = querySnapshot.docs[0];
                   const chats = doc.data().chats;
 
@@ -69,6 +77,13 @@ export const EditChat = () => {
                       return chatItem;
                     }
                   });
+
+                  const targetChat = updatedChats.find(
+                    (chatItem: Users) => chatItem.uid === chat.user.uid
+                  );
+                  targetChat &&
+                    dispatch({ type: CHANGE_USER, payload: targetChat });
+
                   await updateDoc(doc.ref, { chats: updatedChats });
 
                   setSubmitting(false);
@@ -93,6 +108,11 @@ export const EditChat = () => {
                           },
                         },
                       }}
+                    />
+                    <ErrorMessage
+                      name="name"
+                      component="div"
+                      className="error"
                     />
                     <div className="btns">
                       <Link href={pathname}>

@@ -64,7 +64,7 @@ export const CurrentProfile = () => {
               <h1>Profile</h1>
             </div>
             <ProfileBar
-              className="auth-profile-menu"
+              className="info-profile-bar"
               data={currentUserData}
               loading={loading}
             >
