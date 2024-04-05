@@ -1,4 +1,3 @@
-"use client";
 import { Skeleton } from "@mui/material";
 
 import "@/styles/components/index.scss";

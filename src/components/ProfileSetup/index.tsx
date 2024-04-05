@@ -11,19 +11,15 @@ import { StyledTextField } from "../SignUp";
 import { AuthContext } from "@/context/AuthContext";
 import { AlertContext, SET_ALERT } from "@/context/AlertContext";
 import { db } from "@/utils/firebase";
+import { FormVals } from "@/types";
 import "@/styles/components/index.scss";
-
-type FormValues = {
-  name: string;
-  bio: string;
-};
 
 export const ProfileSetup = () => {
   const { currentUser } = useContext(AuthContext);
   const { dispatch } = useContext(AlertContext);
   const router = useRouter();
 
-  const initialValues: FormValues = {
+  const initialValues: FormVals = {
     name: "",
     bio: "",
   };
@@ -33,7 +29,7 @@ export const ProfileSetup = () => {
       .min(2, "Required min 2")
       .max(16, "Required max 16")
       .required("Name is required"),
-    bio: Yup.string().min(4, "Required min 4").max(100, "Required max 100"),
+    bio: Yup.string().max(100, "Required max 100"),
   });
 
   return (
@@ -58,6 +54,7 @@ export const ProfileSetup = () => {
             type: SET_ALERT,
             payload: null,
           });
+
           router.push("/");
         }, 2000);
 

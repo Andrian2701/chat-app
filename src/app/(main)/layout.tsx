@@ -2,7 +2,7 @@
 
 import {
   LogOut,
-  CurrentProfile,
+  Info,
   AddChat,
   UserInfo,
   EditChat,
@@ -17,7 +17,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
     <div className="main-layout">
       <SideBar />
       <LogOut />
-      <CurrentProfile />
+      <Info />
       <UserInfo />
       <AddChat />
       <ChatAction />

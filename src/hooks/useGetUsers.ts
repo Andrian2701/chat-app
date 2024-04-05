@@ -8,16 +8,17 @@ import { AuthContext } from "@/context/AuthContext";
 export const useGetUsers = () => {
   const { currentUser } = useContext(AuthContext);
   const [users, setUsers] = useState<Users[] | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    const q = query(collection(db, "users"));
+    setLoading(true);
 
-    const unsub = onSnapshot(q, (querySnapshot) => {
+    const unsub = onSnapshot(collection(db, "users"), (querySnapshot) => {
       const data: any[] = [];
       querySnapshot.forEach((doc) => {
         data.push({ ...doc.data() });
       });
+
       setUsers(data);
       setLoading(false);
     });

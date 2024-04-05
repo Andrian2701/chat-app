@@ -9,6 +9,7 @@ import * as Yup from "yup";
 
 import { GoogleAuth, FormButton } from "@/components/index";
 import { auth, db } from "@/utils/firebase";
+import { FormVals } from "@/types";
 import "@/styles/components/index.scss";
 
 export const StyledTextField = styled(TextField)`
@@ -25,15 +26,10 @@ export const StyledTextField = styled(TextField)`
   }
 `;
 
-type FormValues = {
-  email: string;
-  password: string;
-};
-
 export const SignUp = () => {
   const router = useRouter();
 
-  const initialValues: FormValues = {
+  const initialValues: FormVals = {
     email: "",
     password: "",
   };
@@ -51,19 +47,21 @@ export const SignUp = () => {
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={(values, { setSubmitting }) => {
-        createUserWithEmailAndPassword(
-          auth,
-          values.email,
-          values.password
-        ).then((userCredential) => {
-          setDoc(doc(db, "users", userCredential.user.uid), {
-            uid: userCredential.user.uid,
-            name: userCredential.user.displayName,
-            email: userCredential.user.email,
-          });
+        values.email &&
+          values.password &&
+          createUserWithEmailAndPassword(
+            auth,
+            values.email,
+            values.password
+          ).then((userCredential) => {
+            setDoc(doc(db, "users", userCredential.user.uid), {
+              uid: userCredential.user.uid,
+              name: userCredential.user.displayName,
+              email: userCredential.user.email,
+            });
 
-          router.push("/profile-setup");
-        });
+            router.push("/profile-setup");
+          });
 
         setSubmitting(false);
       }}

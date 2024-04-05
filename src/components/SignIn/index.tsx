@@ -11,18 +11,14 @@ import { GoogleAuth, Alert, FormButton } from "@/components";
 import { AlertContext, SET_ALERT } from "@/context/AlertContext";
 import { StyledTextField } from "../SignUp";
 import { auth } from "@/utils/firebase";
+import { FormVals } from "@/types";
 import "@/styles/components/index.scss";
-
-type FormValues = {
-  email: string;
-  password: string;
-};
 
 export const SignIn = () => {
   const { dispatch }: any = useContext(AlertContext);
   const router = useRouter();
 
-  const initialValues: FormValues = {
+  const initialValues: FormVals = {
     email: "",
     password: "",
   };
@@ -40,23 +36,25 @@ export const SignIn = () => {
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={(values, { setSubmitting }) => {
-        signInWithEmailAndPassword(auth, values.email, values.password)
-          .then(() => {
-            dispatch({
-              type: SET_ALERT,
-              payload: "Successfull authentification.",
+        values.email &&
+          values.password &&
+          signInWithEmailAndPassword(auth, values.email, values.password)
+            .then(() => {
+              dispatch({
+                type: SET_ALERT,
+                payload: "Successfull authentification.",
+              });
+              setTimeout(() => {
+                dispatch({ type: "SET_ALERT", payload: null });
+                router.push("/");
+              }, 2000);
+            })
+            .catch(() => {
+              dispatch({
+                type: SET_ALERT,
+                payload: "Email or password isn't correct. Please try.",
+              });
             });
-            setTimeout(() => {
-              dispatch({ type: "SET_ALERT", payload: null });
-              router.push("/");
-            }, 2000);
-          })
-          .catch(() => {
-            dispatch({
-              type: SET_ALERT,
-              payload: "Email or password isn't correct. Please try.",
-            });
-          });
 
         setSubmitting(false);
       }}

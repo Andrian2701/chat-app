@@ -2,7 +2,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSearchParams, usePathname } from "next/navigation";
 import { signOut } from "firebase/auth";
-import { Button } from "@mui/material";
 
 import { MainButton, ModalOverlay } from "@/components";
 import { auth } from "@/utils/firebase";

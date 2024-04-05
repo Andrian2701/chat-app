@@ -1,10 +1,12 @@
+@use "../../abstracts/index.scss" as *;
+
 .nav-bar {
   a {
     padding: 0.8rem 0.8rem 0.8rem 1.5rem;
     display: flex;
     gap: 1rem;
     text-decoration: none;
-    color: #050505;
+    color: $color-black;
     font-size: 1.4rem;
 
     p {
@@ -14,7 +16,7 @@
     }
 
     &:hover {
-      background-color: #ededed;
+      background-color: $color-grey-hover;
     }
   }
 }

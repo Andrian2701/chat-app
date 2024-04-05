@@ -1,5 +1,5 @@
 export * from "./FormButton";
-export * from "./CurrentProfile";
+export * from "./Info";
 export * from "./ChatList";
 export * from "./ChatMessages";
 export * from "./GoogleAuth";
@@ -9,7 +9,7 @@ export * from "./Message";
 export * from "./ModalOverlay";
 export * from "./NavBar";
 export * from "./ProfileBar";
-export * from "./Search";
+export * from "./SearchInput";
 export * from "./SetAvatar";
 export * from "./ProfileSetup";
 export * from "./SignIn";

@@ -1,5 +1,5 @@
 "use client";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { getRedirectResult, signInWithRedirect } from "firebase/auth";
@@ -10,11 +10,7 @@ import { auth, provider, db } from "@/utils/firebase";
 import googleIcon from "@/assets/google.png";
 import "@/styles/components/index.scss";
 
-type Props = {
-  label: string;
-};
-
-export const GoogleAuth = ({ label }: Props) => {
+export const GoogleAuth = ({ label }: { label: string }) => {
   const { dispatch } = useContext(AlertContext);
   const router = useRouter();
 
@@ -26,10 +22,11 @@ export const GoogleAuth = ({ label }: Props) => {
       const user = res?.user;
       if (!user) return;
 
-      const userData = await getDoc(doc(db, "users", user.uid));
+      const usersRef = doc(db, "users", user.uid);
+      const userData = await getDoc(usersRef);
 
       if (!userData.exists()) {
-        await setDoc(doc(db, "users", user.uid), {
+        await setDoc(usersRef, {
           uid: user.uid,
           name: user.displayName,
           email: user.email,
@@ -42,6 +39,7 @@ export const GoogleAuth = ({ label }: Props) => {
           type: SET_ALERT,
           payload: "Successfull authentification.",
         });
+
         setTimeout(() => {
           dispatch({
             type: SET_ALERT,

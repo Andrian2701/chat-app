@@ -5,10 +5,10 @@ import { useSearchParams, usePathname } from "next/navigation";
 import { RiArrowLeftLine } from "react-icons/ri";
 import { LiaSearchSolid } from "react-icons/lia";
 
-import { MainButton, ModalOverlay, Search, UserList } from "@/components";
+import { MainButton, ModalOverlay, SearchInput, UserList } from "@/components";
 import { AuthContext } from "@/context/AuthContext";
 import { UsersContext } from "@/context/UsersContext";
-import { useFilterListData } from "@/hooks/useFilterListData";
+import { useFilterList } from "@/hooks/useFilterList";
 import "@/styles/components/index.scss";
 
 export const AddChat = () => {
@@ -25,7 +25,7 @@ export const AddChat = () => {
   }, [users, currentUser]);
 
   const { filteredList, handleFilterList } =
-    useFilterListData(unAuthenticatedUsers);
+    useFilterList(unAuthenticatedUsers);
 
   useEffect(() => {
     handleFilterList("");
@@ -45,12 +45,12 @@ export const AddChat = () => {
             </div>
             <div className="flex-bottom">
               <div className="side-bar-top">
-                <Search
+                <SearchInput
                   className="search-users"
                   onChangeCallback={handleFilterList}
                 >
                   <LiaSearchSolid className="search-icon" />
-                </Search>
+                </SearchInput>
               </div>
               <UserList users={filteredList} loading={loading} />
               <div className="btns">

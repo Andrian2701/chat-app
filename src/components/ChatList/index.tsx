@@ -1,6 +1,5 @@
-"use client";
 import Link from "next/link";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { Avatar } from "@mui/material";
 
 import { CHANGE_USER, ChatContext } from "@/context/ChatContext";

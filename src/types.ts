@@ -1,7 +1,7 @@
 export type Users = {
   uid: string;
-  email?: string;
   name: string;
+  email?: string;
   bio?: string;
   avatar: string;
 };
@@ -11,4 +11,11 @@ export type ChatMessage = {
   uid: string;
   text: string;
   createdAt: { seconds: number; nanoseconds: number };
+};
+
+export type FormVals = {
+  name?: string;
+  email?: string;
+  password?: string;
+  bio?: string;
 };
