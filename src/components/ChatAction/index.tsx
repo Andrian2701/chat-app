@@ -2,13 +2,20 @@
 import { useContext } from "react";
 import Link from "next/link";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
-import { arrayRemove, deleteField, doc, updateDoc } from "firebase/firestore";
+import {
+  arrayRemove,
+  deleteField,
+  doc,
+  getDoc,
+  updateDoc,
+} from "firebase/firestore";
 
 import { MainButton, ModalOverlay } from "@/components";
 import { AuthContext } from "@/context/AuthContext";
 import { CurrentUserContext } from "@/context/CurrentUserContext";
 import { ChatContext } from "@/context/ChatContext";
 import { db } from "@/utils/firebase";
+import { Users } from "@/types";
 import "@/styles/components/index.scss";
 
 export const ChatAction = () => {
@@ -30,6 +37,8 @@ export const ChatAction = () => {
   };
 
   const handleDeleteChat = async () => {
+    if (!currentUserData) return;
+
     await updateDoc(doc(db, "userChats", currentUser.uid), {
       chats: arrayRemove({
         uid: chat.user.uid,
@@ -38,15 +47,19 @@ export const ChatAction = () => {
         avatar: chat.user.avatar ? chat.user.avatar : "",
       }),
     });
+
+    const docSnap = await getDoc(doc(db, "userChats", chat.user.uid));
+    const data = docSnap.data();
+    const targetChat = data?.chats.filter(
+      (chat: Users) => chat.uid === currentUserData[0].uid
+    );
+
     await updateDoc(doc(db, "userChats", chat.user.uid), {
       chats: arrayRemove({
-        uid: currentUserData && currentUserData[0]?.uid,
-        email: currentUserData && currentUserData[0]?.email,
-        name: currentUserData && currentUserData[0]?.name,
-        avatar:
-          currentUserData && currentUserData[0]?.avatar
-            ? currentUserData[0]?.avatar
-            : "",
+        uid: targetChat[0].uid,
+        email: targetChat[0].email,
+        name: targetChat[0].name,
+        avatar: targetChat[0].avatar ? targetChat[0].avatar : "",
       }),
     });
     await updateDoc(doc(db, "chats", chat.chatId), {

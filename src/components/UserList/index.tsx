@@ -4,8 +4,8 @@ import { setDoc, getDoc, doc, updateDoc, arrayUnion } from "firebase/firestore";
 import { Avatar } from "@mui/material";
 
 import { LoadingSkeleton } from "@/components";
-import { AuthContext } from "@/context/AuthContext";
 import { CHANGE_USER, ChatContext } from "@/context/ChatContext";
+import { CurrentUserContext } from "@/context/CurrentUserContext";
 import { db } from "@/utils/firebase";
 import { Users } from "@/types";
 import "@/styles/components/index.scss";
@@ -16,21 +16,21 @@ type Props = {
 };
 
 export const UserList = ({ users, loading }: Props) => {
-  const { currentUser } = useContext(AuthContext);
+  const { currentUserData } = useContext(CurrentUserContext);
   const { dispatch }: any = useContext(ChatContext);
 
   const handleChatSelect = (u: any) =>
     dispatch({ type: CHANGE_USER, payload: u });
 
   const handleUserSelect = async (user: Users) => {
-    if (!currentUser) return;
+    if (!currentUserData) return;
 
     const combinedId =
-      currentUser.uid > user.uid
-        ? currentUser.uid + user.uid
-        : user.uid + currentUser.uid;
+      currentUserData[0].uid > user.uid
+        ? currentUserData[0].uid + user.uid
+        : user.uid + currentUserData[0].uid;
 
-    const currentUserChatsRef = doc(db, "userChats", currentUser.uid);
+    const currentUserChatsRef = doc(db, "userChats", currentUserData[0].uid);
     const userChatsRef = doc(db, "userChats", user.uid);
     const chatsRef = doc(db, "chats", combinedId);
     const currentUserChats = await getDoc(currentUserChatsRef);
@@ -47,7 +47,7 @@ export const UserList = ({ users, loading }: Props) => {
       await setDoc(chatsRef, { messages: [] });
     }
 
-    updateDoc(currentUserChatsRef, {
+    await updateDoc(currentUserChatsRef, {
       chats: arrayUnion({
         uid: user.uid,
         email: user.email,
@@ -55,12 +55,12 @@ export const UserList = ({ users, loading }: Props) => {
         avatar: user.avatar ? user.avatar : "",
       }),
     });
-    updateDoc(userChatsRef, {
+    await updateDoc(userChatsRef, {
       chats: arrayUnion({
-        uid: currentUser.uid,
-        email: currentUser.email,
-        name: currentUser.displayName,
-        avatar: currentUser.photoUrl ? currentUser.photoUrl : "",
+        uid: currentUserData[0].uid,
+        email: currentUserData[0].email,
+        name: currentUserData[0].name,
+        avatar: currentUserData[0].avatar ? currentUserData[0].avatar : "",
       }),
     });
   };
