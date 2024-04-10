@@ -1,4 +1,3 @@
-"use client";
 import { useContext } from "react";
 import Link from "next/link";
 import { RiArrowLeftLine } from "react-icons/ri";

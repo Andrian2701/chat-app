@@ -8,11 +8,13 @@ type Props = {
 };
 
 export const useFilterList = (data: Props) => {
-  const [filteredList, setFilteredList] = useState(data);
+  const [filteredList, setFilteredList] = useState<Props | []>(data);
 
   useEffect(() => {
     if (data !== null && data !== undefined) {
-      Object.keys(data).length > 0 && setFilteredList(data);
+      Object.keys(data).length > 0
+        ? setFilteredList(data)
+        : setFilteredList([]);
     }
   }, [data]);
 
