@@ -2,6 +2,7 @@
 import { useState, useContext } from "react";
 import { doc, updateDoc, arrayUnion, Timestamp } from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid";
+import Picker from "emoji-picker-react";
 import { PiImage } from "react-icons/pi";
 import { GoSmiley } from "react-icons/go";
 import { IoSendSharp } from "react-icons/io5";
@@ -20,6 +21,7 @@ export const ChatInputBar = ({ scroll }: Props) => {
   const { currentUser } = useContext(AuthContext);
   const { chat }: any = useContext(ChatContext);
   const [message, setMessage] = useState<string>("");
+  const [showPicker, setShowPicker] = useState(false);
 
   const handleSendMessage = async () => {
     if (message.trim() !== "") {
@@ -47,6 +49,11 @@ export const ChatInputBar = ({ scroll }: Props) => {
     }
   };
 
+  const handleOnEmojiClick = (emojiObj: { emoji: string }) => {
+    setMessage((prevVal) => prevVal + emojiObj.emoji);
+    setShowPicker(false);
+  };
+
   return (
     <div className="chat-input-bar">
       <div className="flex-left">
@@ -59,7 +66,10 @@ export const ChatInputBar = ({ scroll }: Props) => {
         />
       </div>
       <div className="flex-right">
-        <GoSmiley />
+        <GoSmiley onClick={() => setShowPicker((val) => !val)} />
+        {showPicker && (
+          <Picker className="emoji-picker" onEmojiClick={handleOnEmojiClick} />
+        )}
         {message ? (
           <IoSendSharp className="send-icon" onClick={handleSendMessage} />
         ) : (
