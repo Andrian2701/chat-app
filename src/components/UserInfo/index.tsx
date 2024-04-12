@@ -14,7 +14,7 @@ import {
   IoHandRightOutline,
 } from "react-icons/io5";
 
-import { EditChat, ModalOverlay, ProfileBar } from "@/components";
+import { ModalOverlay, ProfileBar } from "@/components";
 import { ChatContext } from "@/context/ChatContext";
 import "@/styles/components/index.scss";
 

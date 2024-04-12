@@ -18,5 +18,8 @@ const auth = getAuth();
 const db = getFirestore();
 const storage = getStorage();
 const provider = new GoogleAuthProvider();
+const metadata = {
+  contentType: "image/jpg",
+};
 
-export { app, auth, provider, db, storage };
+export { app, auth, provider, db, storage, metadata };

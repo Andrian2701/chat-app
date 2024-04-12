@@ -10,12 +10,8 @@ import {
 } from "firebase/storage";
 
 import { AuthContext } from "@/context/AuthContext";
-import { db, storage } from "@/utils/firebase";
+import { db, storage, metadata } from "@/utils/firebase";
 import "@/styles/components/index.scss";
-
-const metadata = {
-  contentType: "image/jpg",
-};
 
 export const SetAvatar = () => {
   const { currentUser } = useContext(AuthContext);

@@ -1,10 +1,15 @@
 import { useContext } from "react";
+import Image from "next/image";
 
 import { AuthContext } from "@/context/AuthContext";
-import { ChatMessage } from "@/types";
+import { Messages } from "@/types";
 import "@/styles/components/index.scss";
 
-export const Message = ({ data }: ChatMessage) => {
+type Props = {
+  data: Messages;
+};
+
+export const Message = ({ data }: Props) => {
   const { currentUser } = useContext(AuthContext);
 
   const handleFormatTime = (date: Date) => {
@@ -12,40 +17,31 @@ export const Message = ({ data }: ChatMessage) => {
     const minutes = date.getMinutes().toString().padStart(2, "0");
     return `${hours}:${minutes}`;
   };
+  const mDate = handleFormatTime(
+    new Date(data.createdAt.seconds * 1000 + data.createdAt.nanoseconds / 1e6)
+  );
 
   return (
     <div
       className={currentUser && data.uid === currentUser.uid ? "sender-m" : "m"}
     >
-      {data && data.img ? (
-        <>
-          <img src={data.img} alt="img-message" />
-          <span className="img-m-date">
-            <div>
-              {handleFormatTime(
-                new Date(
-                  data.createdAt.seconds * 1000 +
-                    data.createdAt.nanoseconds / 1e6
-                )
-              )}
-            </div>
+      {data.img && (
+        <div
+          className={data.uid === currentUser.uid ? "sender-img-m" : "img-m"}
+        >
+          <span>
+            <div>{mDate}</div>
           </span>
-        </>
-      ) : null}
+          <Image src={data.img} alt="img" width={250} height={450} />
+        </div>
+      )}
       {data.text !== "" && (
-        <p>
-          <span className="m-text">{data.text}</span>
-          <span className="m-date">
-            <div>
-              {handleFormatTime(
-                new Date(
-                  data.createdAt.seconds * 1000 +
-                    data.createdAt.nanoseconds / 1e6
-                )
-              )}
-            </div>
+        <div className="text-m">
+          <p>{data.text}</p>
+          <span>
+            <div>{mDate}</div>
           </span>
-        </p>
+        </div>
       )}
     </div>
   );

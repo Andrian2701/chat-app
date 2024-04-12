@@ -5,16 +5,16 @@ import { onSnapshot, doc } from "firebase/firestore";
 import { Message } from "@/components/index";
 import { ChatContext } from "@/context/ChatContext";
 import { db } from "@/utils/firebase";
-import { ChatMessage } from "@/types";
+import { Chat, Messages } from "@/types";
 import "@/styles/components/index.scss";
 
 type Props = {
-  forwardedRef: React.MutableRefObject<any>;
+  forwardedRef: React.RefObject<HTMLDivElement>;
 };
 
 export const ChatMessages = forwardRef(({ forwardedRef }: Props) => {
-  const { chat }: any = useContext(ChatContext);
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const { chat }: Chat = useContext(ChatContext);
+  const [messages, setMessages] = useState<Messages[]>([]);
 
   useEffect(() => {
     const unSub = onSnapshot(doc(db, "chats", chat.chatId), (doc) => {
@@ -26,7 +26,7 @@ export const ChatMessages = forwardRef(({ forwardedRef }: Props) => {
 
   return (
     <div className="chat-messages">
-      {messages && messages.map((m) => <Message data={m} />)}
+      {messages && messages.map((m) => <Message key={m.id} data={m} />)}
       <span ref={forwardedRef}></span>
     </div>
   );

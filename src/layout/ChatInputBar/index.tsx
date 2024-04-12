@@ -12,7 +12,8 @@ import { VscMic } from "react-icons/vsc";
 
 import { ChatContext } from "@/context/ChatContext";
 import { AuthContext } from "@/context/AuthContext";
-import { db, storage } from "@/utils/firebase";
+import { db, storage, metadata } from "@/utils/firebase";
+import { Chat } from "@/types";
 import "@/styles/layout/index.scss";
 
 export const ChatInputBar = ({
@@ -21,22 +22,18 @@ export const ChatInputBar = ({
   scroll: React.RefObject<HTMLDivElement>;
 }) => {
   const { currentUser } = useContext(AuthContext);
-  const { chat }: any = useContext(ChatContext);
+  const { chat }: Chat = useContext(ChatContext);
   const [textMessage, setTextMessage] = useState<string>("");
   const [imgMessage, setImgMessage] = useState<File | null>(null);
   const [imgURL, setImgURL] = useState<string>("");
   const [showPicker, setShowPicker] = useState<boolean>(false);
-
-  const metadata = {
-    contentType: "image/jpg",
-  };
 
   useEffect(() => {
     const handleUploadImage = async () => {
       if (imgMessage) {
         const storageRef = ref(
           storage,
-          `imgMessage-messages/${chat.chatId}/${uuidv4()}`
+          `img-messages/${chat.chatId}/${uuidv4()}`
         );
         const reader = new FileReader();
 
@@ -62,7 +59,7 @@ export const ChatInputBar = ({
           messages: arrayUnion({
             id: uuidv4(),
             uid: currentUser.uid,
-            imgMessage: imgURL,
+            img: imgURL,
             text: textMessage,
             createdAt: Timestamp.now(),
           }),
@@ -102,7 +99,7 @@ export const ChatInputBar = ({
       {imgURL && (
         <div className="help-bar">
           <div className="flex-left">
-            <img src={imgURL} alt="textMessage" width={35} height={35} />
+            <Image src={imgURL} alt="textMessage" width={35} height={35} />
             <span>
               <p className="action">Send image</p>
               <p>imgMessage</p>

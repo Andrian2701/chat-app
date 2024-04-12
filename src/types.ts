@@ -6,8 +6,8 @@ export type Users = {
   avatar: string;
 };
 
-export type ChatMessage = {
-  id?: string;
+export type Messages = {
+  id: string;
   uid: string;
   text: string;
   img?: string;
@@ -19,4 +19,11 @@ export type FormVals = {
   email?: string;
   password?: string;
   bio?: string;
+};
+
+export type Chat = {
+  chat: {
+    chatId: string;
+    user: Users;
+  };
 };
