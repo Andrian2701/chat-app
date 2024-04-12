@@ -2,11 +2,33 @@
 
 .sender-m {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: flex-end;
+  align-items: flex-end;
+  gap: 0.2rem;
+  position: relative;
+
+  img {
+    width: 16rem;
+    height: 30rem;
+    border-radius: 1rem;
+  }
+
+  .img-m-date {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    color: #ffffff;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 999rem;
+    padding: 0.2rem 0.7rem 0.2rem 0.7rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
 
   p {
-    height: 100%;
+    height: 36.2px;
     padding: 0.4rem 1rem 0.4rem 1rem;
     border-top-left-radius: 1rem;
     border-top-right-radius: 1rem;
@@ -52,6 +74,7 @@
 .m {
   @extend .sender-m;
   justify-content: flex-start;
+  align-items: flex-start;
 
   p {
     border-bottom-left-radius: 0rem;

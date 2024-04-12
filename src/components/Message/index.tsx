@@ -17,18 +17,36 @@ export const Message = ({ data }: ChatMessage) => {
     <div
       className={currentUser && data.uid === currentUser.uid ? "sender-m" : "m"}
     >
-      <p>
-        <span className="m-text">{data.text}</span>
-        <span className="m-date">
-          <div>
-            {handleFormatTime(
-              new Date(
-                data.createdAt.seconds * 1000 + data.createdAt.nanoseconds / 1e6
-              )
-            )}
-          </div>
-        </span>
-      </p>
+      {data && data.img ? (
+        <>
+          <img src={data.img} alt="img-message" />
+          <span className="img-m-date">
+            <div>
+              {handleFormatTime(
+                new Date(
+                  data.createdAt.seconds * 1000 +
+                    data.createdAt.nanoseconds / 1e6
+                )
+              )}
+            </div>
+          </span>
+        </>
+      ) : null}
+      {data.text !== "" && (
+        <p>
+          <span className="m-text">{data.text}</span>
+          <span className="m-date">
+            <div>
+              {handleFormatTime(
+                new Date(
+                  data.createdAt.seconds * 1000 +
+                    data.createdAt.nanoseconds / 1e6
+                )
+              )}
+            </div>
+          </span>
+        </p>
+      )}
     </div>
   );
 };

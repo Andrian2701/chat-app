@@ -10,6 +10,7 @@ export type ChatMessage = {
   id?: string;
   uid: string;
   text: string;
+  img?: string;
   createdAt: { seconds: number; nanoseconds: number };
 };
 
