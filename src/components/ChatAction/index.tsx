@@ -43,34 +43,34 @@ export const ChatAction = () => {
   };
 
   const handleDeleteChat = async () => {
-    if (!currentUserData) return;
+    if (currentUserData) {
+      const userChatRef = doc(db, "userChats", chat.user.uid);
+      const docSnap = await getDoc(userChatRef);
+      const data = docSnap.data();
+      const targetChat = data?.chats.filter(
+        (chat: Users) => chat.uid === currentUserData[0].uid
+      );
 
-    await updateDoc(doc(db, "userChats", currentUser.uid), {
-      chats: arrayRemove({
-        uid: chat.user.uid,
-        email: chat.user.email,
-        name: chat.user.name,
-        avatar: chat.user.avatar ? chat.user.avatar : "",
-      }),
-    });
+      await updateDoc(doc(db, "userChats", currentUser.uid), {
+        chats: arrayRemove({
+          uid: chat.user.uid,
+          email: chat.user.email,
+          name: chat.user.name,
+          avatar: chat.user.avatar ? chat.user.avatar : "",
+        }),
+      });
+      await updateDoc(userChatRef, {
+        chats: arrayRemove({
+          uid: targetChat[0].uid,
+          email: targetChat[0].email,
+          name: targetChat[0].name,
+          avatar: targetChat[0].avatar ? targetChat[0].avatar : "",
+        }),
+      });
+      handleClearChat();
 
-    const docSnap = await getDoc(doc(db, "userChats", chat.user.uid));
-    const data = docSnap.data();
-    const targetChat = data?.chats.filter(
-      (chat: Users) => chat.uid === currentUserData[0].uid
-    );
-
-    await updateDoc(doc(db, "userChats", chat.user.uid), {
-      chats: arrayRemove({
-        uid: targetChat[0].uid,
-        email: targetChat[0].email,
-        name: targetChat[0].name,
-        avatar: targetChat[0].avatar ? targetChat[0].avatar : "",
-      }),
-    });
-    handleClearChat();
-
-    router.push("/");
+      router.push("/");
+    }
   };
 
   return (

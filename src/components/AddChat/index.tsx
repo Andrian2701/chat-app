@@ -37,13 +37,13 @@ export const AddChat = () => {
         <>
           <ModalOverlay />
           <div className="add-users">
-            <div className="flex-top">
+            <div className="top">
               <Link href={pathname}>
                 <RiArrowLeftLine />
               </Link>
               <h1>People</h1>
             </div>
-            <div className="flex-bottom">
+            <div className="bottom">
               <div className="side-bar-top">
                 <SearchInput
                   className="search-users"

@@ -115,7 +115,7 @@ export const Info = () => {
                     />
                     <div className="text">
                       Any details such as age, job. <br></br>Example: 25 y.o.
-                      florist from Norway
+                      florist from the Netherlands
                     </div>
                     <span>
                       <StyledTextField
