@@ -9,12 +9,13 @@ import {
   getDoc,
   updateDoc,
 } from "firebase/firestore";
+import { deleteObject, listAll, ref } from "firebase/storage";
 
 import { MainButton, ModalOverlay } from "@/components";
 import { AuthContext } from "@/context/AuthContext";
 import { CurrentUserContext } from "@/context/CurrentUserContext";
 import { ChatContext } from "@/context/ChatContext";
-import { db } from "@/utils/firebase";
+import { db, storage } from "@/utils/firebase";
 import { Users } from "@/types";
 import "@/styles/components/index.scss";
 
@@ -33,7 +34,12 @@ export const ChatAction = () => {
       messages: deleteField(),
     });
 
-    router.push(pathname);
+    const folderRef = ref(storage, `img-messages/${chat.chatId}`);
+    const fileList = await listAll(folderRef);
+    const promises = [];
+    for (let item of fileList.items) {
+      promises.push(deleteObject(item));
+    }
   };
 
   const handleDeleteChat = async () => {
@@ -62,9 +68,7 @@ export const ChatAction = () => {
         avatar: targetChat[0].avatar ? targetChat[0].avatar : "",
       }),
     });
-    await updateDoc(doc(db, "chats", chat.chatId), {
-      messages: deleteField(),
-    });
+    handleClearChat();
 
     router.push("/");
   };
@@ -84,11 +88,13 @@ export const ChatAction = () => {
               <Link href={pathname}>
                 <MainButton label="Cancel" />
               </Link>
-              <MainButton
-                className="main-btn-red"
-                label="Delete"
-                onClick={clearChat ? handleClearChat : handleDeleteChat}
-              />
+              <Link href={pathname}>
+                <MainButton
+                  className="main-btn-red"
+                  label="Delete"
+                  onClick={clearChat ? handleClearChat : handleDeleteChat}
+                />
+              </Link>
             </div>
           </div>
         </>
