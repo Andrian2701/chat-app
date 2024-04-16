@@ -42,7 +42,7 @@ export const Info = () => {
   const validationSchema = Yup.object({
     name: Yup.string()
       .min(2, "Required min 2")
-      .max(16, "Required max 16")
+      .max(16, "Required max 20")
       .required("Name is required"),
     bio: Yup.string().max(100, "Required max 100"),
   });

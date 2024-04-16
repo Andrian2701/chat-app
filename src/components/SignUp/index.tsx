@@ -69,7 +69,7 @@ export const SignUp = () => {
       {({ values, handleSubmit, handleChange }) => {
         return (
           <Form className="sign-up" onSubmit={handleSubmit}>
-            <h1>Sign up to Evertalk</h1>
+            <h1>Sign up to evertalk</h1>
             <GoogleAuth label="Sign up" />
             <Divider className="divider">or</Divider>
             <div className="input-container">

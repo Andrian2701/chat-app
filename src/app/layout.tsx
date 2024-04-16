@@ -1,4 +1,6 @@
+import Head from "next/head";
 import { Roboto } from "next/font/google";
+import { Metadata } from "next";
 
 import { AuthContextProvider } from "@/context/AuthContext";
 import { UsersContextProvider } from "@/context/UsersContext";
@@ -13,9 +15,17 @@ const roboto = Roboto({
   variable: "--var-roboto",
 });
 
+export const metadata: Metadata = {
+  title: "evertalk",
+  description: "Experience evertalk app with our user-friendly design",
+};
+
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
+      <Head>
+        <link rel="icon" href="/icon.ico" sizes="any" />
+      </Head>
       <AuthContextProvider>
         <CurrentUserContextProvider>
           <UsersContextProvider>

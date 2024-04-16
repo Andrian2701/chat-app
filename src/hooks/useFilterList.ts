@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect } from "react";
 
 import { Users } from "@/types";
@@ -11,11 +12,9 @@ export const useFilterList = (data: Props) => {
   const [filteredList, setFilteredList] = useState<Props | []>(data);
 
   useEffect(() => {
-    if (data !== null && data !== undefined) {
-      Object.keys(data).length > 0
-        ? setFilteredList(data)
-        : setFilteredList([]);
-    }
+    data !== null && data !== undefined && Object.keys(data).length > 0
+      ? setFilteredList(data)
+      : setFilteredList([]);
   }, [data]);
 
   const handleFilterList = (searchTerm: string) => {

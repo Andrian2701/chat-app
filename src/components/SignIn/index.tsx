@@ -52,7 +52,7 @@ export const SignIn = () => {
             .catch(() => {
               dispatch({
                 type: SET_ALERT,
-                payload: "Email or password isn't correct. Please try.",
+                payload: "Email or password isn't correct. Please retry.",
               });
             });
 
@@ -63,7 +63,7 @@ export const SignIn = () => {
         return (
           <>
             <Form className="sign-in" onSubmit={handleSubmit}>
-              <h1>Sign in to Evertalk</h1>
+              <h1>Sign in to evertalk</h1>
               <GoogleAuth label="Sign in" />
               <Divider className="divider">or</Divider>
               <div className="input-container">

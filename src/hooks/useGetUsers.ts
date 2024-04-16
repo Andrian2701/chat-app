@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
-import { collection, onSnapshot, query } from "firebase/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
 
-import { db } from "../utils/firebase";
+import { db } from "@/utils/firebase";
 import { Users } from "@/types";
 import { AuthContext } from "@/context/AuthContext";
 
