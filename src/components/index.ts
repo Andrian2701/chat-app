@@ -22,3 +22,4 @@ export * from "./MainButton";
 export * from "./ChatAction";
 export * from "./UserInfo";
 export * from "./EditChat";
+export * from "./PopupMenu";

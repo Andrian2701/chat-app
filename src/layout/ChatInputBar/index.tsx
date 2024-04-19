@@ -54,32 +54,25 @@ export const ChatInputBar = ({
   }, [imgMessage]);
 
   const handleSendMessage = async () => {
-    imgURL
-      ? await updateDoc(doc(db, "chats", chat.chatId), {
-          messages: arrayUnion({
-            id: uuidv4(),
-            uid: currentUser.uid,
-            img: imgURL,
-            text: textMessage,
-            createdAt: Timestamp.now(),
-          }),
-        })
-      : textMessage.trim() !== "" &&
-        (await updateDoc(doc(db, "chats", chat.chatId), {
-          messages: arrayUnion({
-            id: uuidv4(),
-            uid: currentUser.uid,
-            text: textMessage,
-            createdAt: Timestamp.now(),
-          }),
-        }));
+    if (imgURL || textMessage.trim() !== "") {
+      await updateDoc(doc(db, "chats", chat.chatId), {
+        messages: arrayUnion({
+          id: uuidv4(),
+          uid: currentUser.uid,
+          img: imgURL ? imgURL : "",
+          text: textMessage,
+          createdAt: Timestamp.now(),
+        }),
+      });
+    }
 
     setTextMessage("");
     setImgURL("");
     setImgMessage(null);
 
-    scroll.current !== null &&
+    if (scroll.current !== null) {
       scroll.current.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   const handleSendOnKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -102,7 +95,7 @@ export const ChatInputBar = ({
             <Image src={imgURL} alt="textMessage" width={35} height={35} />
             <span>
               <p className="action">Send image</p>
-              <p>imgMessage</p>
+              <p>img</p>
             </span>
           </div>
           <IoClose onClick={() => setImgURL("")} />

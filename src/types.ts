@@ -27,3 +27,10 @@ export type Chat = {
     user: Users;
   };
 };
+
+export type MenuItems = {
+  href: string;
+  icon: React.ReactElement;
+  title: string;
+  color?: string;
+};

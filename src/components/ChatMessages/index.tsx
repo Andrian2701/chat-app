@@ -26,7 +26,7 @@ export const ChatMessages = forwardRef(({ forwardedRef }: Props) => {
 
   return (
     <div className="chat-messages">
-      {messages && messages.map((m) => <Message key={m.id} data={m} />)}
+      {messages && messages.map((m) => <Message key={m.id} mData={m} />)}
       <span ref={forwardedRef}></span>
     </div>
   );

@@ -1,5 +1,7 @@
-import Link from "next/link";
+"use client";
 import { useContext } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Avatar } from "@mui/material";
 
 import { CHANGE_USER, ChatContext } from "@/context/ChatContext";
@@ -13,6 +15,8 @@ type Props = {
 
 export const ChatList = ({ chats, loading }: Props) => {
   const { dispatch }: any = useContext(ChatContext);
+  const pathname = usePathname();
+  const decodedPath = decodeURI(pathname);
 
   const handleChatSelect = (u: any) =>
     dispatch({ type: CHANGE_USER, payload: u });
@@ -28,7 +32,7 @@ export const ChatList = ({ chats, loading }: Props) => {
               <Link
                 key={chat.uid}
                 href={`/chat/${chat.name}`}
-                className="chat"
+                className={decodedPath === `/chat/${chat.name}` ? "active" : ""}
                 onClick={() => handleChatSelect(chat)}
               >
                 <div className="flex-left">
@@ -40,7 +44,7 @@ export const ChatList = ({ chats, loading }: Props) => {
                     <p className="time">17:00</p>
                   </div>
                   <div className="flex-bottom">
-                    <p>How was your weekend?</p>
+                    <p></p>
                   </div>
                 </div>
               </Link>

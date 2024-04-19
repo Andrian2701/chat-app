@@ -6,7 +6,7 @@
   overflow: hidden;
   overflow-y: scroll;
 
-  .chat {
+  a {
     height: 60.8px;
     padding: 0.7rem 0.9rem 0.7rem 0.9rem;
     display: flex;
@@ -53,6 +53,33 @@
       .flex-bottom {
         color: $color-grey;
         font-size: 0.9rem;
+      }
+    }
+  }
+
+  .active {
+    @extend a;
+
+    &:hover {
+      background-color: $color-blue;
+    }
+    background-color: $color-blue;
+
+    .flex-right {
+      .flex-top {
+        .name {
+          color: $color-white;
+        }
+
+        .time {
+          color: $color-white;
+        }
+      }
+    }
+
+    .flex-bottom {
+      p {
+        color: $color-white;
       }
     }
   }
